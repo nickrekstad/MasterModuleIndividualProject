@@ -1,0 +1,4944 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Masters Module Project - Occupancy Prediction - Cleaned}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}80}]:} \PY{c+c1}{\PYZsh{} Import statements}
+         \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         \PY{k+kn}{import} \PY{n+nn}{openpyxl}
+         \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k}{import} \PY{n}{LogisticRegression}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{naive\PYZus{}bayes} \PY{k}{import} \PY{n}{GaussianNB}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k}{import} \PY{n}{SGDClassifier}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{neighbors} \PY{k}{import} \PY{n}{KNeighborsClassifier}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{tree} \PY{k}{import} \PY{n}{DecisionTreeClassifier}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{ensemble} \PY{k}{import} \PY{n}{RandomForestClassifier}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{svm} \PY{k}{import} \PY{n}{SVC}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k}{import} \PY{n}{KFold}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn} \PY{k}{import} \PY{n}{metrics}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k}{import} \PY{n}{StandardScaler}
+         \PY{k+kn}{from} \PY{n+nn}{itertools} \PY{k}{import} \PY{n}{compress}\PY{p}{,} \PY{n}{product}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{c+c1}{\PYZsh{} Training, validation and test data}
+        \PY{n}{trainingDataFile} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C:/Users/nicholas.rekstad/MastersModuleProject/data\PYZus{}training.csv}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{trainingDataFileAddedFeatures} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C:/Users/nicholas.rekstad/MastersModuleProject/data\PYZus{}added features\PYZus{}training.csv}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{validationDataFile} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C:/Users/nicholas.rekstad/MastersModuleProject/data\PYZus{}validation.csv}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{validationDataFileAddedFeatures} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C:/Users/nicholas.rekstad/MastersModuleProject/data\PYZus{}added features\PYZus{}validation.csv}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{testDataFile} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C:/Users/nicholas.rekstad/MastersModuleProject/data\PYZus{}test.csv}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{testDataFileAddedFeatures} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C:/Users/nicholas.rekstad/MastersModuleProject/data\PYZus{}added features\PYZus{}test.csv}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{\PYZsh{} Create Pandas dataframe for training data}
+         \PY{n}{trainingDataFrame} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{trainingDataFile}\PY{p}{)}
+         \PY{n}{trainingDataAddedFeatures} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{trainingDataFileAddedFeatures}\PY{p}{)}
+         \PY{n}{validationDataFrame} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{validationDataFileAddedFeatures}\PY{p}{)}
+         \PY{n}{testDataFrame} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{testDataFileAddedFeatures}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{trainingDataAddedFeatures}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:}                date  DayOfWeek  TimeOfDay  Temperature  Humidity  Light  \textbackslash{}
+         0  04/02/2015 17:51          4       17.0        23.18   27.2720  426.0   
+         1  04/02/2015 17:51          4       17.0        23.15   27.2675  429.5   
+         2  04/02/2015 17:53          4       17.0        23.15   27.2450  426.0   
+         3  04/02/2015 17:54          4       17.0        23.15   27.2000  426.0   
+         4  04/02/2015 17:55          4       17.0        23.10   27.2000  426.0   
+         
+               CO2  HumidityRatio  Occupancy  
+         0  721.25       0.004793          1  
+         1  714.00       0.004783          1  
+         2  713.50       0.004779          1  
+         3  708.25       0.004772          1  
+         4  704.50       0.004757          1  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{trainingDataAddedFeatures}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:}          DayOfWeek    TimeOfDay  Temperature     Humidity        Light  \textbackslash{}
+         count  8143.000000  8143.000000  8143.000000  8143.000000  8143.000000   
+         mean      4.106349    11.390642    20.619084    25.731507   119.519375   
+         std       2.198733     7.092195     1.016916     5.531211   194.755805   
+         min       1.000000     0.000000    19.000000    16.745000     0.000000   
+         25\%       2.000000     5.000000    19.700000    20.200000     0.000000   
+         50\%       5.000000    11.000000    20.390000    26.222500     0.000000   
+         75\%       6.000000    18.000000    21.390000    30.533333   256.375000   
+         max       7.000000    23.000000    23.180000    39.117500  1546.333333   
+         
+                        CO2  HumidityRatio    Occupancy  
+         count  8143.000000    8143.000000  8143.000000  
+         mean    606.546243       0.003863     0.212330  
+         std     314.320877       0.000852     0.408982  
+         min     412.750000       0.002674     0.000000  
+         25\%     439.000000       0.003078     0.000000  
+         50\%     453.500000       0.003801     0.000000  
+         75\%     638.833333       0.004352     0.000000  
+         max    2028.500000       0.006476     1.000000  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{trainingDataAddedFeatures}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Occupancy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}13}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x23a0613e0b8>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_5_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{trainingDataAddedFeatures}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CO2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x23a084551d0>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{trainingDataAddedFeatures}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Light}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}15}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x23a0844c2e8>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_7_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{trainingDataAddedFeatures}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x23a09511320>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{trainingDataAddedFeatures}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Humidity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}17}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x23a094e9be0>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_9_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{trainingDataAddedFeatures}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HumidityRatio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}18}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x23a095d79e8>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}114}]:} \PY{n}{trainingDataAddedFeatures}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DayOfWeek}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}114}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x23a14e25ba8>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_11_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}86}]:} \PY{n}{attributes} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CO2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Light}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Humidity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HumidityRatio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Occupancy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{c+c1}{\PYZsh{}attributes = [\PYZsq{}DayOfWeek\PYZsq{},\PYZsq{}TimeOfDay\PYZsq{},\PYZsq{}Temperature\PYZsq{},\PYZsq{}Occupancy\PYZsq{}]}
+         \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{trainingDataFrame}\PY{p}{[}\PY{n}{attributes}\PY{p}{]}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{linewidths} \PY{o}{=} \PY{o}{.}\PY{l+m+mi}{5}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_12_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{c+c1}{\PYZsh{}Generic function for making a classification model and assessing performance:}
+         \PY{k}{def} \PY{n+nf}{classification\PYZus{}model}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{data}\PY{p}{,} \PY{n}{predictors}\PY{p}{,} \PY{n}{outcome}\PY{p}{)}\PY{p}{:}
+           \PY{c+c1}{\PYZsh{}Fit the model:}
+           \PY{n}{model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{predictors}\PY{p}{]}\PY{p}{,}\PY{n}{data}\PY{p}{[}\PY{n}{outcome}\PY{p}{]}\PY{p}{)}
+           
+           \PY{c+c1}{\PYZsh{}Make predictions on training set:}
+           \PY{n}{predictions} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{predictors}\PY{p}{]}\PY{p}{)}
+           
+           \PY{c+c1}{\PYZsh{}Print accuracy}
+           \PY{n}{accuracy} \PY{o}{=} \PY{n}{metrics}\PY{o}{.}\PY{n}{accuracy\PYZus{}score}\PY{p}{(}\PY{n}{predictions}\PY{p}{,}\PY{n}{data}\PY{p}{[}\PY{n}{outcome}\PY{p}{]}\PY{p}{)}
+           \PY{n+nb}{print} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Training Accuracy : }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}0:.3\PYZpc{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{accuracy}\PY{p}{)}\PY{p}{)}
+         
+           \PY{c+c1}{\PYZsh{}Perform k\PYZhy{}fold cross\PYZhy{}validation with 5 folds}
+           \PY{n}{kf} \PY{o}{=} \PY{n}{KFold}\PY{p}{(}\PY{n}{n\PYZus{}splits}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{)}
+           \PY{n}{error} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+           \PY{k}{for} \PY{n}{train}\PY{p}{,} \PY{n}{test} \PY{o+ow}{in} \PY{n}{kf}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{data}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{} Filter training data}
+             \PY{n}{train\PYZus{}predictors} \PY{o}{=} \PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{predictors}\PY{p}{]}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{train}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} The target we\PYZsq{}re using to train the algorithm.}
+             \PY{n}{train\PYZus{}target} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{n}{outcome}\PY{p}{]}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{train}\PY{p}{]}
+             
+             \PY{c+c1}{\PYZsh{} Training the algorithm using the predictors and target.}
+             \PY{n}{model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{train\PYZus{}predictors}\PY{p}{,} \PY{n}{train\PYZus{}target}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{}Record error from each cross\PYZhy{}validation run}
+             \PY{n}{error}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{model}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{predictors}\PY{p}{]}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{test}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{data}\PY{p}{[}\PY{n}{outcome}\PY{p}{]}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{test}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+          
+           \PY{n+nb}{print} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Cross\PYZhy{}Validation Score : }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}0:.3\PYZpc{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{error}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         
+           \PY{c+c1}{\PYZsh{}Fit the model again so that it can be refered outside the function:}
+           \PY{n}{model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{predictors}\PY{p}{]}\PY{p}{,}\PY{n}{data}\PY{p}{[}\PY{n}{outcome}\PY{p}{]}\PY{p}{)} 
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{c+c1}{\PYZsh{} Generic function for assessing the accuracy of the predictions}
+         \PY{k}{def} \PY{n+nf}{prediction\PYZus{}model}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{data}\PY{p}{,} \PY{n}{predictors}\PY{p}{,} \PY{n}{outcome}\PY{p}{)}\PY{p}{:}
+           
+           \PY{c+c1}{\PYZsh{}Make predictions on training set:}
+           \PY{n}{predictions} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{predictors}\PY{p}{]}\PY{p}{)}
+           
+           \PY{c+c1}{\PYZsh{}Print accuracy}
+           \PY{n}{accuracy} \PY{o}{=} \PY{n}{metrics}\PY{o}{.}\PY{n}{accuracy\PYZus{}score}\PY{p}{(}\PY{n}{predictions}\PY{p}{,}\PY{n}{data}\PY{p}{[}\PY{n}{outcome}\PY{p}{]}\PY{p}{)}
+           \PY{c+c1}{\PYZsh{}print(accuracy)}
+           \PY{n+nb}{print} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Accuracy: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}0:.3\PYZpc{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{accuracy}\PY{p}{)}\PY{p}{)}
+           \PY{k}{return} \PY{n}{accuracy}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}105}]:} \PY{c+c1}{\PYZsh{} Function that streamlines the training, validation and testing of a model}
+          \PY{k}{def} \PY{n+nf}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{trainingData}\PY{p}{,} \PY{n}{validationData}\PY{p}{,} \PY{n}{testData}\PY{p}{,} \PY{n}{predictors}\PY{p}{,} \PY{n}{outcome}\PY{p}{)}\PY{p}{:}
+              \PY{n}{classification\PYZus{}model}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{trainingData}\PY{p}{,} \PY{n}{predictors}\PY{p}{,} \PY{n}{outcome}\PY{p}{)}
+              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{=== Validation ===}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+              \PY{n}{validation} \PY{o}{=} \PY{n}{prediction\PYZus{}model}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{validationData}\PY{p}{,} \PY{n}{predictors}\PY{p}{,} \PY{n}{outcome}\PY{p}{)}
+              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{=== Testing ===}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+              \PY{n}{test} \PY{o}{=} \PY{n}{prediction\PYZus{}model}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{testData}\PY{p}{,} \PY{n}{predictors}\PY{p}{,} \PY{n}{outcome}\PY{p}{)}
+              
+              \PY{c+c1}{\PYZsh{}print(validation)}
+              \PY{c+c1}{\PYZsh{}print(test)}
+              
+              \PY{n}{score} \PY{o}{=} \PY{n}{validation} \PY{o}{*} \PY{n}{test}
+              
+              
+              \PY{k}{return} \PY{n}{score}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{c+c1}{\PYZsh{} Finds all possible of non\PYZhy{}arbitrary combinations of inputs}
+         \PY{k}{def} \PY{n+nf}{combinations}\PY{p}{(}\PY{n}{items}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{p}{(} \PY{n+nb}{set}\PY{p}{(}\PY{n}{compress}\PY{p}{(}\PY{n}{items}\PY{p}{,}\PY{n}{mask}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{mask} \PY{o+ow}{in} \PY{n}{product}\PY{p}{(}\PY{o}{*}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{o}{*}\PY{n+nb}{len}\PY{p}{(}\PY{n}{items}\PY{p}{)}\PY{p}{)} \PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{c+c1}{\PYZsh{} Prepares combinations in format for use with algorithm}
+         \PY{k}{def} \PY{n+nf}{prepareRuns}\PY{p}{(}\PY{n}{options}\PY{p}{)}\PY{p}{:}
+             \PY{n}{runs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{batch} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{combinations}\PY{p}{(}\PY{n}{options}\PY{p}{)}\PY{p}{)}
+             \PY{n}{batch}\PY{o}{.}\PY{n}{pop}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+             \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{batch}\PY{p}{:}
+                 \PY{n}{y} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+                 \PY{n}{runs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{y}\PY{p}{)}
+             \PY{k}{return} \PY{n}{runs}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}26}]:} [['HumidityRatio'],
+          ['Humidity'],
+          ['Humidity', 'HumidityRatio'],
+          ['Temperature'],
+          ['Temperature', 'HumidityRatio'],
+          ['Temperature', 'Humidity'],
+          ['Temperature', 'Humidity', 'HumidityRatio'],
+          ['Light'],
+          ['Light', 'HumidityRatio'],
+          ['Light', 'Humidity'],
+          ['Light', 'Humidity', 'HumidityRatio'],
+          ['Light', 'Temperature'],
+          ['Light', 'Temperature', 'HumidityRatio'],
+          ['Light', 'Temperature', 'Humidity'],
+          ['Light', 'Temperature', 'Humidity', 'HumidityRatio'],
+          ['CO2'],
+          ['CO2', 'HumidityRatio'],
+          ['CO2', 'Humidity'],
+          ['CO2', 'Humidity', 'HumidityRatio'],
+          ['Temperature', 'CO2'],
+          ['Temperature', 'CO2', 'HumidityRatio'],
+          ['Temperature', 'CO2', 'Humidity'],
+          ['Temperature', 'CO2', 'Humidity', 'HumidityRatio'],
+          ['Light', 'CO2'],
+          ['Light', 'CO2', 'HumidityRatio'],
+          ['Light', 'CO2', 'Humidity'],
+          ['Light', 'CO2', 'Humidity', 'HumidityRatio'],
+          ['Light', 'Temperature', 'CO2'],
+          ['Light', 'Temperature', 'CO2', 'HumidityRatio'],
+          ['Light', 'Temperature', 'CO2', 'Humidity'],
+          ['Light', 'Humidity', 'Temperature', 'CO2', 'HumidityRatio'],
+          ['TimeOfDay'],
+          ['TimeOfDay', 'HumidityRatio'],
+          ['TimeOfDay', 'Humidity'],
+          ['TimeOfDay', 'Humidity', 'HumidityRatio'],
+          ['TimeOfDay', 'Temperature'],
+          ['TimeOfDay', 'Temperature', 'HumidityRatio'],
+          ['TimeOfDay', 'Temperature', 'Humidity'],
+          ['TimeOfDay', 'Temperature', 'Humidity', 'HumidityRatio'],
+          ['TimeOfDay', 'Light'],
+          ['TimeOfDay', 'Light', 'HumidityRatio'],
+          ['TimeOfDay', 'Humidity', 'Light'],
+          ['TimeOfDay', 'Humidity', 'Light', 'HumidityRatio'],
+          ['TimeOfDay', 'Temperature', 'Light'],
+          ['TimeOfDay', 'Temperature', 'Light', 'HumidityRatio'],
+          ['TimeOfDay', 'Temperature', 'Humidity', 'Light'],
+          ['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'HumidityRatio'],
+          ['TimeOfDay', 'CO2'],
+          ['TimeOfDay', 'CO2', 'HumidityRatio'],
+          ['TimeOfDay', 'CO2', 'Humidity'],
+          ['TimeOfDay', 'CO2', 'Humidity', 'HumidityRatio'],
+          ['TimeOfDay', 'Temperature', 'CO2'],
+          ['TimeOfDay', 'Temperature', 'CO2', 'HumidityRatio'],
+          ['TimeOfDay', 'Temperature', 'CO2', 'Humidity'],
+          ['Humidity', 'Temperature', 'TimeOfDay', 'CO2', 'HumidityRatio'],
+          ['TimeOfDay', 'CO2', 'Light'],
+          ['TimeOfDay', 'CO2', 'Light', 'HumidityRatio'],
+          ['TimeOfDay', 'CO2', 'Humidity', 'Light'],
+          ['Light', 'Humidity', 'TimeOfDay', 'CO2', 'HumidityRatio'],
+          ['TimeOfDay', 'Temperature', 'CO2', 'Light'],
+          ['Light', 'Temperature', 'TimeOfDay', 'CO2', 'HumidityRatio'],
+          ['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'CO2'],
+          ['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'CO2', 'HumidityRatio'],
+          ['DayOfWeek'],
+          ['HumidityRatio', 'DayOfWeek'],
+          ['Humidity', 'DayOfWeek'],
+          ['HumidityRatio', 'Humidity', 'DayOfWeek'],
+          ['Temperature', 'DayOfWeek'],
+          ['Temperature', 'HumidityRatio', 'DayOfWeek'],
+          ['Temperature', 'Humidity', 'DayOfWeek'],
+          ['Temperature', 'HumidityRatio', 'Humidity', 'DayOfWeek'],
+          ['Light', 'DayOfWeek'],
+          ['Light', 'HumidityRatio', 'DayOfWeek'],
+          ['Light', 'Humidity', 'DayOfWeek'],
+          ['Light', 'HumidityRatio', 'Humidity', 'DayOfWeek'],
+          ['Light', 'Temperature', 'DayOfWeek'],
+          ['Light', 'Temperature', 'HumidityRatio', 'DayOfWeek'],
+          ['Light', 'Temperature', 'Humidity', 'DayOfWeek'],
+          ['Light', 'Humidity', 'Temperature', 'DayOfWeek', 'HumidityRatio'],
+          ['CO2', 'DayOfWeek'],
+          ['CO2', 'HumidityRatio', 'DayOfWeek'],
+          ['CO2', 'Humidity', 'DayOfWeek'],
+          ['CO2', 'Humidity', 'HumidityRatio', 'DayOfWeek'],
+          ['Temperature', 'CO2', 'DayOfWeek'],
+          ['Temperature', 'CO2', 'HumidityRatio', 'DayOfWeek'],
+          ['Temperature', 'CO2', 'Humidity', 'DayOfWeek'],
+          ['Humidity', 'Temperature', 'DayOfWeek', 'CO2', 'HumidityRatio'],
+          ['Light', 'CO2', 'DayOfWeek'],
+          ['Light', 'CO2', 'HumidityRatio', 'DayOfWeek'],
+          ['Light', 'CO2', 'Humidity', 'DayOfWeek'],
+          ['Light', 'Humidity', 'DayOfWeek', 'CO2', 'HumidityRatio'],
+          ['Light', 'Temperature', 'CO2', 'DayOfWeek'],
+          ['Light', 'Temperature', 'DayOfWeek', 'CO2', 'HumidityRatio'],
+          ['Light', 'Humidity', 'Temperature', 'CO2', 'DayOfWeek'],
+          ['Light', 'Humidity', 'Temperature', 'HumidityRatio', 'CO2', 'DayOfWeek'],
+          ['TimeOfDay', 'DayOfWeek'],
+          ['TimeOfDay', 'HumidityRatio', 'DayOfWeek'],
+          ['TimeOfDay', 'Humidity', 'DayOfWeek'],
+          ['TimeOfDay', 'HumidityRatio', 'Humidity', 'DayOfWeek'],
+          ['TimeOfDay', 'Temperature', 'DayOfWeek'],
+          ['TimeOfDay', 'Temperature', 'HumidityRatio', 'DayOfWeek'],
+          ['TimeOfDay', 'Temperature', 'Humidity', 'DayOfWeek'],
+          ['Humidity', 'Temperature', 'DayOfWeek', 'TimeOfDay', 'HumidityRatio'],
+          ['TimeOfDay', 'Light', 'DayOfWeek'],
+          ['TimeOfDay', 'HumidityRatio', 'Light', 'DayOfWeek'],
+          ['TimeOfDay', 'Humidity', 'Light', 'DayOfWeek'],
+          ['Light', 'Humidity', 'DayOfWeek', 'TimeOfDay', 'HumidityRatio'],
+          ['TimeOfDay', 'Temperature', 'Light', 'DayOfWeek'],
+          ['Light', 'Temperature', 'DayOfWeek', 'TimeOfDay', 'HumidityRatio'],
+          ['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'DayOfWeek'],
+          ['Light',
+           'Humidity',
+           'Temperature',
+           'HumidityRatio',
+           'TimeOfDay',
+           'DayOfWeek'],
+          ['TimeOfDay', 'CO2', 'DayOfWeek'],
+          ['TimeOfDay', 'CO2', 'HumidityRatio', 'DayOfWeek'],
+          ['TimeOfDay', 'CO2', 'Humidity', 'DayOfWeek'],
+          ['Humidity', 'DayOfWeek', 'TimeOfDay', 'CO2', 'HumidityRatio'],
+          ['TimeOfDay', 'Temperature', 'CO2', 'DayOfWeek'],
+          ['Temperature', 'DayOfWeek', 'TimeOfDay', 'CO2', 'HumidityRatio'],
+          ['Humidity', 'Temperature', 'TimeOfDay', 'CO2', 'DayOfWeek'],
+          ['Humidity', 'Temperature', 'HumidityRatio', 'TimeOfDay', 'CO2', 'DayOfWeek'],
+          ['TimeOfDay', 'CO2', 'Light', 'DayOfWeek'],
+          ['Light', 'DayOfWeek', 'TimeOfDay', 'CO2', 'HumidityRatio'],
+          ['Light', 'Humidity', 'TimeOfDay', 'CO2', 'DayOfWeek'],
+          ['Light', 'Humidity', 'HumidityRatio', 'TimeOfDay', 'CO2', 'DayOfWeek'],
+          ['Light', 'Temperature', 'TimeOfDay', 'CO2', 'DayOfWeek'],
+          ['Light', 'Temperature', 'HumidityRatio', 'TimeOfDay', 'CO2', 'DayOfWeek'],
+          ['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'CO2', 'DayOfWeek'],
+          ['Light',
+           'Humidity',
+           'Temperature',
+           'HumidityRatio',
+           'TimeOfDay',
+           'CO2',
+           'DayOfWeek']]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}79}]:} \PY{c+c1}{\PYZsh{} Scaling data}
+         \PY{n}{scaler} \PY{o}{=} \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{trainingDataAddedFeatures}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DayOfWeek}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TimeOfDay}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CO2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Light}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Humidity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HumidityRatio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+         \PY{n}{scaledTrainingDataSet} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{scaler}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{trainingDataAddedFeatures}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DayOfWeek}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TimeOfDay}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CO2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Light}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Humidity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HumidityRatio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{p}{)}\PY{p}{,}\PY{n}{columns} \PY{o}{=} \PY{n}{trainingDataAddedFeatures}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DayOfWeek}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TimeOfDay}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CO2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Light}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Humidity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HumidityRatio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
+         \PY{n}{scaledTrainingDataSet}\PY{o}{.}\PY{n}{insert}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Occupancy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{trainingDataAddedFeatures}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Occupancy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{scaler} \PY{o}{=} \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{trainingDataAddedFeatures}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DayOfWeek}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TimeOfDay}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CO2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Light}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Humidity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HumidityRatio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+         \PY{n}{scaledValidationDataSet} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{scaler}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{validationDataFrame}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DayOfWeek}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TimeOfDay}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CO2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Light}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Humidity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HumidityRatio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{p}{)}\PY{p}{,}\PY{n}{columns} \PY{o}{=} \PY{n}{validationDataFrame}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DayOfWeek}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TimeOfDay}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CO2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Light}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Humidity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HumidityRatio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
+         \PY{n}{scaledValidationDataSet}\PY{o}{.}\PY{n}{insert}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Occupancy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{validationDataFrame}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Occupancy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{scaler} \PY{o}{=} \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{trainingDataAddedFeatures}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DayOfWeek}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TimeOfDay}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CO2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Light}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Humidity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HumidityRatio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+         \PY{n}{scaledTestDataSet} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{scaler}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{testDataFrame}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DayOfWeek}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TimeOfDay}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CO2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Light}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Humidity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HumidityRatio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{p}{)}\PY{p}{,}\PY{n}{columns} \PY{o}{=} \PY{n}{testDataFrame}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DayOfWeek}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TimeOfDay}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CO2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Light}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Humidity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HumidityRatio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
+         \PY{n}{scaledTestDataSet}\PY{o}{.}\PY{n}{insert}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Occupancy}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{testDataFrame}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Occupancy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{scaledTrainingDataSet}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}79}]:}    DayOfWeek  TimeOfDay       CO2     Light  Temperature  Humidity  \textbackslash{}
+         0  -0.048371   0.790968  0.364948  1.573763     2.518470  0.278526   
+         1  -0.048371   0.790968  0.341881  1.591735     2.488967  0.277713   
+         2  -0.048371   0.790968  0.340290  1.573763     2.488967  0.273645   
+         3  -0.048371   0.790968  0.323587  1.573763     2.488967  0.265508   
+         4  -0.048371   0.790968  0.311655  1.573763     2.439796  0.265508   
+         
+            HumidityRatio  Occupancy  
+         0       1.091757          1  
+         1       1.080555          1  
+         2       1.075889          1  
+         3       1.066555          1  
+         4       1.049523          1  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}73}]:} \PY{c+c1}{\PYZsh{} Scaled data test}
+         \PY{n}{modelKNearestNeighborsScaled} \PY{o}{=} \PY{n}{KNeighborsClassifier}\PY{p}{(}\PY{n}{n\PYZus{}neighbors}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{)}
+         \PY{n}{predictor\PYZus{}var} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DayOfWeek}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TimeOfDay}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{outcome\PYZus{}var} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Occupancy}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{classification\PYZus{}model}\PY{p}{(}\PY{n}{modelKNearestNeighborsScaled}\PY{p}{,} \PY{n}{scaledTrainingDataSet}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Training Accuracy : 98.649\%
+Cross-Validation Score : 82.929\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}77}]:} \PY{c+c1}{\PYZsh{} Testing all model types with scaled variables}
+         \PY{n}{modelLogRegress} \PY{o}{=} \PY{n}{LogisticRegression}\PY{p}{(}\PY{n}{solver}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{newton\PYZhy{}cg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{modelDecisionTree} \PY{o}{=} \PY{n}{DecisionTreeClassifier}\PY{p}{(}\PY{p}{)}
+         \PY{n}{modelRandomForest} \PY{o}{=} \PY{n}{RandomForestClassifier}\PY{p}{(}\PY{n}{n\PYZus{}estimators}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}
+         \PY{n}{modelNaiveBayes} \PY{o}{=} \PY{n}{GaussianNB}\PY{p}{(}\PY{p}{)}
+         \PY{n}{modelStochGradDesc} \PY{o}{=} \PY{n}{SGDClassifier}\PY{p}{(}\PY{n}{loss}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{modified\PYZus{}huber}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{shuffle}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{101}\PY{p}{)}
+         \PY{n}{modelKNearestNeighbors} \PY{o}{=} \PY{n}{KNeighborsClassifier}\PY{p}{(}\PY{n}{n\PYZus{}neighbors}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{)}
+         \PY{n}{modelSupportVectors} \PY{o}{=} \PY{n}{SVC}\PY{p}{(}\PY{n}{kernel}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{linear}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{C}\PY{o}{=}\PY{l+m+mf}{0.025}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{101}\PY{p}{)}
+         
+         \PY{n}{modelList} \PY{o}{=} \PY{p}{[}\PY{n}{modelLogRegress}\PY{p}{,}
+                      \PY{n}{modelDecisionTree}\PY{p}{,}
+                      \PY{n}{modelRandomForest}\PY{p}{,}
+                      \PY{n}{modelNaiveBayes}\PY{p}{,}
+                      \PY{n}{modelStochGradDesc}\PY{p}{,}
+                      \PY{n}{modelKNearestNeighbors}\PY{p}{,}
+                      \PY{n}{modelSupportVectors}
+                     \PY{p}{]}
+         
+         \PY{n}{modelResultsList} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} Desired inputs and outputs}
+         \PY{c+c1}{\PYZsh{}predictor\PYZus{}var = [\PYZsq{}DayOfWeek\PYZsq{},\PYZsq{}TimeOfDay\PYZsq{},\PYZsq{}CO2\PYZsq{},\PYZsq{}Light\PYZsq{},\PYZsq{}Temperature\PYZsq{},\PYZsq{}Humidity\PYZsq{},\PYZsq{}HumidityRatio\PYZsq{}]}
+         \PY{n}{predictor\PYZus{}var} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DayOfWeek}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TimeOfDay}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{outcome\PYZus{}var} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Occupancy}\PY{l+s+s1}{\PYZsq{}}
+         
+         \PY{c+c1}{\PYZsh{} Execute models}
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelLogRegress}\PY{p}{,} \PY{n}{scaledTrainingDataSet}\PY{p}{,} \PY{n}{scaledValidationDataSet}\PY{p}{,} \PY{n}{scaledTestDataSet}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Logistic Regression}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelDecisionTree}\PY{p}{,} \PY{n}{scaledTrainingDataSet}\PY{p}{,} \PY{n}{scaledValidationDataSet}\PY{p}{,} \PY{n}{scaledTestDataSet}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Decision Tree}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelRandomForest}\PY{p}{,} \PY{n}{scaledTrainingDataSet}\PY{p}{,} \PY{n}{scaledValidationDataSet}\PY{p}{,} \PY{n}{scaledTestDataSet}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Random Forest}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelNaiveBayes}\PY{p}{,} \PY{n}{scaledTrainingDataSet}\PY{p}{,} \PY{n}{scaledValidationDataSet}\PY{p}{,} \PY{n}{scaledTestDataSet}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Naïve Bayes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelStochGradDesc}\PY{p}{,} \PY{n}{scaledTrainingDataSet}\PY{p}{,} \PY{n}{scaledValidationDataSet}\PY{p}{,} \PY{n}{scaledTestDataSet}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Stochastic Gradient Descent}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelKNearestNeighbors}\PY{p}{,} \PY{n}{scaledTrainingDataSet}\PY{p}{,} \PY{n}{scaledValidationDataSet}\PY{p}{,} \PY{n}{scaledTestDataSet}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{K\PYZhy{}Nearest Neighbours}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelSupportVectors}\PY{p}{,} \PY{n}{scaledTrainingDataSet}\PY{p}{,} \PY{n}{scaledValidationDataSet}\PY{p}{,} \PY{n}{scaledTestDataSet}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Support Vector Machine}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
+         
+         \PY{k}{for} \PY{n}{result} \PY{o+ow}{in} \PY{n}{modelResultsList}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{result}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Training Accuracy : 83.655\%
+Cross-Validation Score : 79.245\%
+
+=== Validation ===
+
+Accuracy: 86.417\%
+
+=== Testing ===
+
+Accuracy: 90.258\%
+Training Accuracy : 99.104\%
+Cross-Validation Score : 81.973\%
+
+=== Validation ===
+
+Accuracy: 90.844\%
+
+=== Testing ===
+
+Accuracy: 88.864\%
+Training Accuracy : 99.104\%
+Cross-Validation Score : 82.499\%
+
+=== Validation ===
+
+Accuracy: 93.959\%
+
+=== Testing ===
+
+Accuracy: 87.551\%
+Training Accuracy : 87.142\%
+Cross-Validation Score : 82.253\%
+
+=== Validation ===
+
+Accuracy: 87.805\%
+
+=== Testing ===
+
+Accuracy: 85.418\%
+Training Accuracy : 81.604\%
+Cross-Validation Score : 77.600\%
+
+=== Validation ===
+
+Accuracy: 85.216\%
+
+=== Testing ===
+
+Accuracy: 88.074\%
+Training Accuracy : 98.649\%
+Cross-Validation Score : 82.929\%
+
+=== Validation ===
+
+Accuracy: 86.829\%
+
+=== Testing ===
+
+Accuracy: 80.425\%
+Training Accuracy : 84.244\%
+Cross-Validation Score : 77.931\%
+
+=== Validation ===
+
+Accuracy: 85.553\%
+
+=== Testing ===
+
+Accuracy: 90.217\%
+[0.6983202945236999, 'K-Nearest Neighbours']
+[0.7500150063026471, 'Naïve Bayes']
+[0.750531338546805, 'Stochastic Gradient Descent']
+[0.7718410963373848, 'Support Vector Machine']
+[0.7799816692241511, 'Logistic Regression']
+[0.8072769794082746, 'Decision Tree']
+[0.8226205775656544, 'Random Forest']
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{c+c1}{\PYZsh{} Testing all model types without added parameters}
+         \PY{n}{modelLogRegress} \PY{o}{=} \PY{n}{LogisticRegression}\PY{p}{(}\PY{n}{solver}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{newton\PYZhy{}cg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{modelDecisionTree} \PY{o}{=} \PY{n}{DecisionTreeClassifier}\PY{p}{(}\PY{p}{)}
+         \PY{n}{modelRandomForest} \PY{o}{=} \PY{n}{RandomForestClassifier}\PY{p}{(}\PY{n}{n\PYZus{}estimators}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}
+         \PY{n}{modelNaiveBayes} \PY{o}{=} \PY{n}{GaussianNB}\PY{p}{(}\PY{p}{)}
+         \PY{n}{modelStochGradDesc} \PY{o}{=} \PY{n}{SGDClassifier}\PY{p}{(}\PY{n}{loss}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{modified\PYZus{}huber}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{shuffle}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{101}\PY{p}{)}
+         \PY{n}{modelKNearestNeighbors} \PY{o}{=} \PY{n}{KNeighborsClassifier}\PY{p}{(}\PY{n}{n\PYZus{}neighbors}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{)}
+         \PY{n}{modelSupportVectors} \PY{o}{=} \PY{n}{SVC}\PY{p}{(}\PY{n}{kernel}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{linear}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{C}\PY{o}{=}\PY{l+m+mf}{0.025}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{101}\PY{p}{)}
+         
+         \PY{n}{modelList} \PY{o}{=} \PY{p}{[}\PY{n}{modelLogRegress}\PY{p}{,}
+                      \PY{n}{modelDecisionTree}\PY{p}{,}
+                      \PY{n}{modelRandomForest}\PY{p}{,}
+                      \PY{n}{modelNaiveBayes}\PY{p}{,}
+                      \PY{n}{modelStochGradDesc}\PY{p}{,}
+                      \PY{n}{modelKNearestNeighbors}\PY{p}{,}
+                      \PY{n}{modelSupportVectors}
+                     \PY{p}{]}
+         
+         \PY{n}{modelResultsList} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} Desired inputs and outputs}
+         \PY{c+c1}{\PYZsh{}predictor\PYZus{}var = [\PYZsq{}DayOfWeek\PYZsq{},\PYZsq{}TimeOfDay\PYZsq{},\PYZsq{}CO2\PYZsq{},\PYZsq{}Light\PYZsq{},\PYZsq{}Temperature\PYZsq{},\PYZsq{}Humidity\PYZsq{},\PYZsq{}HumidityRatio\PYZsq{}]}
+         \PY{n}{predictor\PYZus{}var} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{outcome\PYZus{}var} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Occupancy}\PY{l+s+s1}{\PYZsq{}}
+         
+         \PY{c+c1}{\PYZsh{} Execute models}
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelLogRegress}\PY{p}{,} \PY{n}{trainingDataAddedFeatures}\PY{p}{,} \PY{n}{validationDataFrame}\PY{p}{,} \PY{n}{testDataFrame}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Logistic Regression}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelDecisionTree}\PY{p}{,} \PY{n}{trainingDataAddedFeatures}\PY{p}{,} \PY{n}{validationDataFrame}\PY{p}{,} \PY{n}{testDataFrame}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Decision Tree}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelRandomForest}\PY{p}{,} \PY{n}{trainingDataAddedFeatures}\PY{p}{,} \PY{n}{validationDataFrame}\PY{p}{,} \PY{n}{testDataFrame}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Random Forest}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelNaiveBayes}\PY{p}{,} \PY{n}{trainingDataAddedFeatures}\PY{p}{,} \PY{n}{validationDataFrame}\PY{p}{,} \PY{n}{testDataFrame}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Naïve Bayes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelStochGradDesc}\PY{p}{,} \PY{n}{trainingDataAddedFeatures}\PY{p}{,} \PY{n}{validationDataFrame}\PY{p}{,} \PY{n}{testDataFrame}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Stochastic Gradient Descent}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelKNearestNeighbors}\PY{p}{,} \PY{n}{trainingDataAddedFeatures}\PY{p}{,} \PY{n}{validationDataFrame}\PY{p}{,} \PY{n}{testDataFrame}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{K\PYZhy{}Nearest Neighbours}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelSupportVectors}\PY{p}{,} \PY{n}{trainingDataAddedFeatures}\PY{p}{,} \PY{n}{validationDataFrame}\PY{p}{,} \PY{n}{testDataFrame}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Support Vector Machine}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
+         
+         \PY{k}{for} \PY{n}{result} \PY{o+ow}{in} \PY{n}{modelResultsList}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{result}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Training Accuracy : 82.402\%
+Cross-Validation Score : 80.719\%
+
+=== Validation ===
+
+Accuracy: 85.328\%
+
+=== Testing ===
+
+Accuracy: 82.763\%
+Training Accuracy : 87.867\%
+Cross-Validation Score : 76.667\%
+
+=== Validation ===
+
+Accuracy: 71.295\%
+
+=== Testing ===
+
+Accuracy: 85.306\%
+Training Accuracy : 87.867\%
+Cross-Validation Score : 76.778\%
+
+=== Validation ===
+
+Accuracy: 70.694\%
+
+=== Testing ===
+
+Accuracy: 85.357\%
+Training Accuracy : 84.195\%
+Cross-Validation Score : 82.942\%
+
+=== Validation ===
+
+Accuracy: 84.878\%
+
+=== Testing ===
+
+Accuracy: 85.131\%
+Training Accuracy : 77.060\%
+Cross-Validation Score : 81.517\%
+
+=== Validation ===
+
+Accuracy: 83.715\%
+
+=== Testing ===
+
+Accuracy: 78.558\%
+Training Accuracy : 85.018\%
+Cross-Validation Score : 77.331\%
+
+=== Validation ===
+
+Accuracy: 66.379\%
+
+=== Testing ===
+
+Accuracy: 82.106\%
+Training Accuracy : 84.355\%
+Cross-Validation Score : 78.336\%
+
+=== Validation ===
+
+Accuracy: 85.666\%
+
+=== Testing ===
+
+Accuracy: 84.393\%
+[0.5450128669425774, 'K-Nearest Neighbours']
+[0.6034232839330981, 'Random Forest']
+[0.6081823596679836, 'Decision Tree']
+[0.6576489433254274, 'Stochastic Gradient Descent']
+[0.7061986803688318, 'Logistic Regression']
+[0.7225774825426678, 'Naïve Bayes']
+[0.7229609512918502, 'Support Vector Machine']
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{c+c1}{\PYZsh{} Testing all model types with added parameters}
+         \PY{n}{modelLogRegress} \PY{o}{=} \PY{n}{LogisticRegression}\PY{p}{(}\PY{n}{solver}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{newton\PYZhy{}cg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{modelDecisionTree} \PY{o}{=} \PY{n}{DecisionTreeClassifier}\PY{p}{(}\PY{p}{)}
+         \PY{n}{modelRandomForest} \PY{o}{=} \PY{n}{RandomForestClassifier}\PY{p}{(}\PY{n}{n\PYZus{}estimators}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}
+         \PY{n}{modelNaiveBayes} \PY{o}{=} \PY{n}{GaussianNB}\PY{p}{(}\PY{p}{)}
+         \PY{n}{modelStochGradDesc} \PY{o}{=} \PY{n}{SGDClassifier}\PY{p}{(}\PY{n}{loss}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{modified\PYZus{}huber}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{shuffle}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{101}\PY{p}{)}
+         \PY{n}{modelKNearestNeighbors} \PY{o}{=} \PY{n}{KNeighborsClassifier}\PY{p}{(}\PY{n}{n\PYZus{}neighbors}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{)}
+         \PY{n}{modelSupportVectors} \PY{o}{=} \PY{n}{SVC}\PY{p}{(}\PY{n}{kernel}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{linear}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{C}\PY{o}{=}\PY{l+m+mf}{0.025}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{101}\PY{p}{)}
+         
+         \PY{n}{modelList} \PY{o}{=} \PY{p}{[}\PY{n}{modelLogRegress}\PY{p}{,}
+                      \PY{n}{modelDecisionTree}\PY{p}{,}
+                      \PY{n}{modelRandomForest}\PY{p}{,}
+                      \PY{n}{modelNaiveBayes}\PY{p}{,}
+                      \PY{n}{modelStochGradDesc}\PY{p}{,}
+                      \PY{n}{modelKNearestNeighbors}\PY{p}{,}
+                      \PY{n}{modelSupportVectors}
+                     \PY{p}{]}
+         
+         \PY{n}{modelResultsList} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} Desired inputs and outputs}
+         \PY{c+c1}{\PYZsh{}predictor\PYZus{}var = [\PYZsq{}DayOfWeek\PYZsq{},\PYZsq{}TimeOfDay\PYZsq{},\PYZsq{}CO2\PYZsq{},\PYZsq{}Light\PYZsq{},\PYZsq{}Temperature\PYZsq{},\PYZsq{}Humidity\PYZsq{},\PYZsq{}HumidityRatio\PYZsq{}]}
+         \PY{n}{predictor\PYZus{}var} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DayOfWeek}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TimeOfDay}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{outcome\PYZus{}var} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Occupancy}\PY{l+s+s1}{\PYZsq{}}
+         
+         \PY{c+c1}{\PYZsh{} Execute models}
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelLogRegress}\PY{p}{,} \PY{n}{trainingDataAddedFeatures}\PY{p}{,} \PY{n}{validationDataFrame}\PY{p}{,} \PY{n}{testDataFrame}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Logistic Regression}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelDecisionTree}\PY{p}{,} \PY{n}{trainingDataAddedFeatures}\PY{p}{,} \PY{n}{validationDataFrame}\PY{p}{,} \PY{n}{testDataFrame}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Decision Tree}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelRandomForest}\PY{p}{,} \PY{n}{trainingDataAddedFeatures}\PY{p}{,} \PY{n}{validationDataFrame}\PY{p}{,} \PY{n}{testDataFrame}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Random Forest}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelNaiveBayes}\PY{p}{,} \PY{n}{trainingDataAddedFeatures}\PY{p}{,} \PY{n}{validationDataFrame}\PY{p}{,} \PY{n}{testDataFrame}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Naïve Bayes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelStochGradDesc}\PY{p}{,} \PY{n}{trainingDataAddedFeatures}\PY{p}{,} \PY{n}{validationDataFrame}\PY{p}{,} \PY{n}{testDataFrame}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Stochastic Gradient Descent}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelKNearestNeighbors}\PY{p}{,} \PY{n}{trainingDataAddedFeatures}\PY{p}{,} \PY{n}{validationDataFrame}\PY{p}{,} \PY{n}{testDataFrame}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{K\PYZhy{}Nearest Neighbours}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelSupportVectors}\PY{p}{,} \PY{n}{trainingDataAddedFeatures}\PY{p}{,} \PY{n}{validationDataFrame}\PY{p}{,} \PY{n}{testDataFrame}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Support Vector Machine}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{modelResultsList}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
+         
+         \PY{k}{for} \PY{n}{result} \PY{o+ow}{in} \PY{n}{modelResultsList}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{result}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Training Accuracy : 83.642\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 79.245\%
+
+=== Validation ===
+
+Accuracy: 86.417\%
+
+=== Testing ===
+
+Accuracy: 90.258\%
+Training Accuracy : 99.104\%
+Cross-Validation Score : 82.071\%
+
+=== Validation ===
+
+Accuracy: 90.844\%
+
+=== Testing ===
+
+Accuracy: 88.864\%
+Training Accuracy : 99.104\%
+Cross-Validation Score : 81.688\%
+
+=== Validation ===
+
+Accuracy: 94.522\%
+
+=== Testing ===
+
+Accuracy: 87.541\%
+Training Accuracy : 87.142\%
+Cross-Validation Score : 82.253\%
+
+=== Validation ===
+
+Accuracy: 87.805\%
+
+=== Testing ===
+
+Accuracy: 85.418\%
+Training Accuracy : 83.556\%
+Cross-Validation Score : 69.667\%
+
+=== Validation ===
+
+Accuracy: 86.942\%
+
+=== Testing ===
+
+Accuracy: 90.894\%
+Training Accuracy : 98.416\%
+Cross-Validation Score : 78.840\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 87.726\%
+Training Accuracy : 84.281\%
+Cross-Validation Score : 78.422\%
+
+=== Validation ===
+
+Accuracy: 85.478\%
+
+=== Testing ===
+
+Accuracy: 90.207\%
+[0.7500150063026471, 'Naïve Bayes']
+[0.7710763905455675, 'Support Vector Machine']
+[0.7799816692241511, 'Logistic Regression']
+[0.7902506745140652, 'Stochastic Gradient Descent']
+[0.8072769794082746, 'Decision Tree']
+[0.8274514911647508, 'Random Forest']
+[0.8361088580280641, 'K-Nearest Neighbours']
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{c+c1}{\PYZsh{} Evaluating logistic regression models for all combinations of inputs to explore best/worst predictors of occupancy}
+         
+         \PY{c+c1}{\PYZsh{} Desired inputs and outputs}
+         \PY{n}{predictor\PYZus{}var} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DayOfWeek}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TimeOfDay}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CO2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Light}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Humidity}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HumidityRatio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{outcome\PYZus{}var} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Occupancy}\PY{l+s+s1}{\PYZsq{}}
+         
+         \PY{c+c1}{\PYZsh{} Generate permutations of inputs}
+         \PY{n}{runs} \PY{o}{=} \PY{n}{prepareRuns}\PY{p}{(}\PY{n}{predictor\PYZus{}var}\PY{p}{)}
+         \PY{n}{counter} \PY{o}{=} \PY{l+m+mi}{0}
+         \PY{n}{results} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{run} \PY{o+ow}{in} \PY{n}{runs}\PY{p}{:}
+             \PY{n}{counter} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{=============================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Run: }\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n+nb}{str}\PY{p}{(}\PY{n}{counter}\PY{p}{)}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{run}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{=============================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} Testing all model types with all variables}
+             \PY{n}{modelLogRegression} \PY{o}{=} \PY{n}{LogisticRegression}\PY{p}{(}\PY{n}{solver}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{newton\PYZhy{}cg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+             \PY{c+c1}{\PYZsh{} Execute models}
+             \PY{n}{score} \PY{o}{=} \PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelLogRegression}\PY{p}{,} \PY{n}{trainingDataAddedFeatures}\PY{p}{,} \PY{n}{validationDataFrame}\PY{p}{,} \PY{n}{testDataFrame}\PY{p}{,} \PY{n}{run}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}
+             \PY{n}{results}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{score}\PY{p}{,}\PY{n}{run}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{results}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+=============================
+Run: 1
+['HumidityRatio']
+=============================
+Training Accuracy : 78.767\%
+Cross-Validation Score : 78.766\%
+
+=== Validation ===
+
+Accuracy: 63.527\%
+
+=== Testing ===
+
+Accuracy: 78.989\%
+=============================
+Run: 2
+['Humidity']
+=============================
+Training Accuracy : 78.767\%
+Cross-Validation Score : 78.766\%
+
+=== Validation ===
+
+Accuracy: 63.527\%
+
+=== Testing ===
+
+Accuracy: 78.989\%
+=============================
+Run: 3
+['Humidity', 'HumidityRatio']
+=============================
+Training Accuracy : 78.767\%
+Cross-Validation Score : 78.766\%
+
+=== Validation ===
+
+Accuracy: 63.527\%
+
+=== Testing ===
+
+Accuracy: 78.989\%
+=============================
+Run: 4
+['Temperature']
+=============================
+Training Accuracy : 82.402\%
+Cross-Validation Score : 80.719\%
+
+=== Validation ===
+
+Accuracy: 85.328\%
+
+=== Testing ===
+
+Accuracy: 82.763\%
+=============================
+Run: 5
+['Temperature', 'HumidityRatio']
+=============================
+Training Accuracy : 82.402\%
+Cross-Validation Score : 80.719\%
+
+=== Validation ===
+
+Accuracy: 85.328\%
+
+=== Testing ===
+
+Accuracy: 82.763\%
+=============================
+Run: 6
+['Temperature', 'Humidity']
+=============================
+Training Accuracy : 83.286\%
+Cross-Validation Score : 82.156\%
+
+=== Validation ===
+
+Accuracy: 86.079\%
+
+=== Testing ===
+
+Accuracy: 84.516\%
+=============================
+Run: 7
+['Temperature', 'Humidity', 'HumidityRatio']
+=============================
+Training Accuracy : 83.286\%
+Cross-Validation Score : 82.156\%
+
+=== Validation ===
+
+Accuracy: 86.079\%
+
+=== Testing ===
+
+Accuracy: 84.516\%
+=============================
+Run: 8
+['Light']
+=============================
+Training Accuracy : 98.563\%
+Cross-Validation Score : 97.618\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.241\%
+=============================
+Run: 9
+['Light', 'HumidityRatio']
+=============================
+Training Accuracy : 98.563\%
+Cross-Validation Score : 97.618\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.241\%
+=============================
+Run: 10
+['Light', 'Humidity']
+=============================
+Training Accuracy : 98.784\%
+Cross-Validation Score : 98.600\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 98.841\%
+=============================
+Run: 11
+['Light', 'Humidity', 'HumidityRatio']
+=============================
+Training Accuracy : 98.784\%
+Cross-Validation Score : 98.600\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 98.841\%
+=============================
+Run: 12
+['Light', 'Temperature']
+=============================
+Training Accuracy : 98.797\%
+Cross-Validation Score : 98.134\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.292\%
+=============================
+Run: 13
+['Light', 'Temperature', 'HumidityRatio']
+=============================
+Training Accuracy : 98.797\%
+Cross-Validation Score : 98.134\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.292\%
+=============================
+Run: 14
+['Light', 'Temperature', 'Humidity']
+=============================
+Training Accuracy : 98.723\%
+Cross-Validation Score : 98.441\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.118\%
+=============================
+Run: 15
+['Light', 'Temperature', 'Humidity', 'HumidityRatio']
+=============================
+Training Accuracy : 98.723\%
+Cross-Validation Score : 98.441\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.118\%
+=============================
+Run: 16
+['CO2']
+=============================
+Training Accuracy : 90.188\%
+Cross-Validation Score : 87.032\%
+
+=== Validation ===
+
+Accuracy: 87.242\%
+
+=== Testing ===
+
+Accuracy: 78.671\%
+=============================
+Run: 17
+['CO2', 'HumidityRatio']
+=============================
+Training Accuracy : 90.188\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:422: LineSearchWarning: Rounding errors prevent the line search from converging
+  warn(msg, LineSearchWarning)
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 87.032\%
+
+=== Validation ===
+
+Accuracy: 87.242\%
+
+=== Testing ===
+
+Accuracy: 78.671\%
+=============================
+Run: 18
+['CO2', 'Humidity']
+=============================
+Training Accuracy : 92.570\%
+Cross-Validation Score : 92.386\%
+
+=== Validation ===
+
+Accuracy: 87.955\%
+
+=== Testing ===
+
+Accuracy: 75.974\%
+=============================
+Run: 19
+['CO2', 'Humidity', 'HumidityRatio']
+=============================
+Training Accuracy : 92.570\%
+Cross-Validation Score : 92.386\%
+
+=== Validation ===
+
+Accuracy: 87.955\%
+
+=== Testing ===
+
+Accuracy: 75.974\%
+=============================
+Run: 20
+['Temperature', 'CO2']
+=============================
+Training Accuracy : 91.023\%
+Cross-Validation Score : 88.063\%
+
+=== Validation ===
+
+Accuracy: 87.280\%
+
+=== Testing ===
+
+Accuracy: 81.050\%
+=============================
+Run: 21
+['Temperature', 'CO2', 'HumidityRatio']
+=============================
+Training Accuracy : 91.023\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 88.063\%
+
+=== Validation ===
+
+Accuracy: 87.280\%
+
+=== Testing ===
+
+Accuracy: 81.050\%
+=============================
+Run: 22
+['Temperature', 'CO2', 'Humidity']
+=============================
+Training Accuracy : 92.533\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 90.470\%
+
+=== Validation ===
+
+Accuracy: 88.293\%
+
+=== Testing ===
+
+Accuracy: 77.051\%
+=============================
+Run: 23
+['Temperature', 'CO2', 'Humidity', 'HumidityRatio']
+=============================
+Training Accuracy : 92.533\%
+Cross-Validation Score : 90.470\%
+
+=== Validation ===
+
+Accuracy: 88.293\%
+
+=== Testing ===
+
+Accuracy: 77.051\%
+=============================
+Run: 24
+['Light', 'CO2']
+=============================
+Training Accuracy : 98.833\%
+Cross-Validation Score : 98.330\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 99.313\%
+=============================
+Run: 25
+['Light', 'CO2', 'HumidityRatio']
+=============================
+Training Accuracy : 98.833\%
+Cross-Validation Score : 98.330\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 99.313\%
+=============================
+Run: 26
+['Light', 'CO2', 'Humidity']
+=============================
+Training Accuracy : 98.809\%
+Cross-Validation Score : 97.752\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 99.118\%
+=============================
+Run: 27
+['Light', 'CO2', 'Humidity', 'HumidityRatio']
+=============================
+Training Accuracy : 98.809\%
+Cross-Validation Score : 97.752\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 99.118\%
+=============================
+Run: 28
+['Light', 'Temperature', 'CO2']
+=============================
+Training Accuracy : 98.600\%
+Cross-Validation Score : 98.232\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.169\%
+=============================
+Run: 29
+['Light', 'Temperature', 'CO2', 'HumidityRatio']
+=============================
+Training Accuracy : 98.600\%
+Cross-Validation Score : 98.232\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.169\%
+=============================
+Run: 30
+['Light', 'Temperature', 'CO2', 'Humidity']
+=============================
+Training Accuracy : 98.600\%
+Cross-Validation Score : 97.863\%
+
+=== Validation ===
+
+Accuracy: 97.636\%
+
+=== Testing ===
+
+Accuracy: 98.421\%
+=============================
+Run: 31
+['Light', 'Humidity', 'Temperature', 'CO2', 'HumidityRatio']
+=============================
+Training Accuracy : 98.600\%
+Cross-Validation Score : 97.863\%
+
+=== Validation ===
+
+Accuracy: 97.636\%
+
+=== Testing ===
+
+Accuracy: 98.421\%
+=============================
+Run: 32
+['TimeOfDay']
+=============================
+Training Accuracy : 78.767\%
+Cross-Validation Score : 78.766\%
+
+=== Validation ===
+
+Accuracy: 63.527\%
+
+=== Testing ===
+
+Accuracy: 78.989\%
+=============================
+Run: 33
+['TimeOfDay', 'HumidityRatio']
+=============================
+Training Accuracy : 78.767\%
+Cross-Validation Score : 78.766\%
+
+=== Validation ===
+
+Accuracy: 63.527\%
+
+=== Testing ===
+
+Accuracy: 78.989\%
+=============================
+Run: 34
+['TimeOfDay', 'Humidity']
+=============================
+Training Accuracy : 78.767\%
+Cross-Validation Score : 78.766\%
+
+=== Validation ===
+
+Accuracy: 63.527\%
+
+=== Testing ===
+
+Accuracy: 78.989\%
+=============================
+Run: 35
+['TimeOfDay', 'Humidity', 'HumidityRatio']
+=============================
+Training Accuracy : 78.767\%
+Cross-Validation Score : 78.766\%
+
+=== Validation ===
+
+Accuracy: 63.527\%
+
+=== Testing ===
+
+Accuracy: 78.989\%
+=============================
+Run: 36
+['TimeOfDay', 'Temperature']
+=============================
+Training Accuracy : 82.660\%
+Cross-Validation Score : 80.129\%
+
+=== Validation ===
+
+Accuracy: 86.304\%
+
+=== Testing ===
+
+Accuracy: 81.850\%
+=============================
+Run: 37
+['TimeOfDay', 'Temperature', 'HumidityRatio']
+=============================
+Training Accuracy : 82.660\%
+Cross-Validation Score : 80.117\%
+
+=== Validation ===
+
+Accuracy: 86.304\%
+
+=== Testing ===
+
+Accuracy: 81.850\%
+=============================
+Run: 38
+['TimeOfDay', 'Temperature', 'Humidity']
+=============================
+Training Accuracy : 83.753\%
+Cross-Validation Score : 82.328\%
+
+=== Validation ===
+
+Accuracy: 87.280\%
+
+=== Testing ===
+
+Accuracy: 85.285\%
+=============================
+Run: 39
+['TimeOfDay', 'Temperature', 'Humidity', 'HumidityRatio']
+=============================
+Training Accuracy : 83.753\%
+Cross-Validation Score : 82.328\%
+
+=== Validation ===
+
+Accuracy: 87.280\%
+
+=== Testing ===
+
+Accuracy: 85.285\%
+=============================
+Run: 40
+['TimeOfDay', 'Light']
+=============================
+Training Accuracy : 98.612\%
+Cross-Validation Score : 97.655\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.262\%
+=============================
+Run: 41
+['TimeOfDay', 'Light', 'HumidityRatio']
+=============================
+Training Accuracy : 98.612\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 97.655\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.262\%
+=============================
+Run: 42
+['TimeOfDay', 'Humidity', 'Light']
+=============================
+Training Accuracy : 98.797\%
+Cross-Validation Score : 98.674\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 98.841\%
+=============================
+Run: 43
+['TimeOfDay', 'Humidity', 'Light', 'HumidityRatio']
+=============================
+Training Accuracy : 98.797\%
+Cross-Validation Score : 98.674\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 98.841\%
+=============================
+Run: 44
+['TimeOfDay', 'Temperature', 'Light']
+=============================
+Training Accuracy : 98.711\%
+Cross-Validation Score : 98.588\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.303\%
+=============================
+Run: 45
+['TimeOfDay', 'Temperature', 'Light', 'HumidityRatio']
+=============================
+Training Accuracy : 98.711\%
+Cross-Validation Score : 98.588\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.303\%
+=============================
+Run: 46
+['TimeOfDay', 'Temperature', 'Humidity', 'Light']
+=============================
+Training Accuracy : 98.674\%
+Cross-Validation Score : 98.379\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.241\%
+=============================
+Run: 47
+['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'HumidityRatio']
+=============================
+Training Accuracy : 98.674\%
+Cross-Validation Score : 98.379\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.241\%
+=============================
+Run: 48
+['TimeOfDay', 'CO2']
+=============================
+Training Accuracy : 90.912\%
+Cross-Validation Score : 87.081\%
+
+=== Validation ===
+
+Accuracy: 87.692\%
+
+=== Testing ===
+
+Accuracy: 73.370\%
+=============================
+Run: 49
+['TimeOfDay', 'CO2', 'HumidityRatio']
+=============================
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Training Accuracy : 90.925\%
+Cross-Validation Score : 87.081\%
+
+=== Validation ===
+
+Accuracy: 87.692\%
+
+=== Testing ===
+
+Accuracy: 73.370\%
+=============================
+Run: 50
+['TimeOfDay', 'CO2', 'Humidity']
+=============================
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Training Accuracy : 93.197\%
+Cross-Validation Score : 92.508\%
+
+=== Validation ===
+
+Accuracy: 88.255\%
+
+=== Testing ===
+
+Accuracy: 72.436\%
+=============================
+Run: 51
+['TimeOfDay', 'CO2', 'Humidity', 'HumidityRatio']
+=============================
+Training Accuracy : 93.197\%
+Cross-Validation Score : 92.508\%
+
+=== Validation ===
+
+Accuracy: 88.255\%
+
+=== Testing ===
+
+Accuracy: 72.436\%
+=============================
+Run: 52
+['TimeOfDay', 'Temperature', 'CO2']
+=============================
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:422: LineSearchWarning: Rounding errors prevent the line search from converging
+  warn(msg, LineSearchWarning)
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Training Accuracy : 92.411\%
+Cross-Validation Score : 88.419\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:422: LineSearchWarning: Rounding errors prevent the line search from converging
+  warn(msg, LineSearchWarning)
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+=== Validation ===
+
+Accuracy: 89.343\%
+
+=== Testing ===
+
+Accuracy: 78.117\%
+=============================
+Run: 53
+['TimeOfDay', 'Temperature', 'CO2', 'HumidityRatio']
+=============================
+Training Accuracy : 92.411\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:422: LineSearchWarning: Rounding errors prevent the line search from converging
+  warn(msg, LineSearchWarning)
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 88.419\%
+
+=== Validation ===
+
+Accuracy: 89.343\%
+
+=== Testing ===
+
+Accuracy: 78.117\%
+=============================
+Run: 54
+['TimeOfDay', 'Temperature', 'CO2', 'Humidity']
+=============================
+Training Accuracy : 93.418\%
+Cross-Validation Score : 90.261\%
+
+=== Validation ===
+
+Accuracy: 89.644\%
+
+=== Testing ===
+
+Accuracy: 73.441\%
+=============================
+Run: 55
+['Humidity', 'Temperature', 'TimeOfDay', 'CO2', 'HumidityRatio']
+=============================
+Training Accuracy : 93.418\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 90.261\%
+
+=== Validation ===
+
+Accuracy: 89.644\%
+
+=== Testing ===
+
+Accuracy: 73.441\%
+=============================
+Run: 56
+['TimeOfDay', 'CO2', 'Light']
+=============================
+Training Accuracy : 98.833\%
+Cross-Validation Score : 98.244\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 98.687\%
+=============================
+Run: 57
+['TimeOfDay', 'CO2', 'Light', 'HumidityRatio']
+=============================
+Training Accuracy : 98.833\%
+Cross-Validation Score : 98.244\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 98.687\%
+=============================
+Run: 58
+['TimeOfDay', 'CO2', 'Humidity', 'Light']
+=============================
+Training Accuracy : 98.833\%
+Cross-Validation Score : 97.814\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 99.087\%
+=============================
+Run: 59
+['Light', 'Humidity', 'TimeOfDay', 'CO2', 'HumidityRatio']
+=============================
+Training Accuracy : 98.833\%
+Cross-Validation Score : 97.814\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 99.087\%
+=============================
+Run: 60
+['TimeOfDay', 'Temperature', 'CO2', 'Light']
+=============================
+Training Accuracy : 98.600\%
+Cross-Validation Score : 98.219\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.221\%
+=============================
+Run: 61
+['Light', 'Temperature', 'TimeOfDay', 'CO2', 'HumidityRatio']
+=============================
+Training Accuracy : 98.600\%
+Cross-Validation Score : 98.219\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.221\%
+=============================
+Run: 62
+['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'CO2']
+=============================
+Training Accuracy : 98.600\%
+Cross-Validation Score : 97.838\%
+
+=== Validation ===
+
+Accuracy: 97.523\%
+
+=== Testing ===
+
+Accuracy: 98.728\%
+=============================
+Run: 63
+['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'CO2', 'HumidityRatio']
+=============================
+Training Accuracy : 98.600\%
+Cross-Validation Score : 97.838\%
+
+=== Validation ===
+
+Accuracy: 97.523\%
+
+=== Testing ===
+
+Accuracy: 98.728\%
+=============================
+Run: 64
+['DayOfWeek']
+=============================
+Training Accuracy : 78.767\%
+Cross-Validation Score : 78.766\%
+
+=== Validation ===
+
+Accuracy: 63.527\%
+
+=== Testing ===
+
+Accuracy: 78.989\%
+=============================
+Run: 65
+['HumidityRatio', 'DayOfWeek']
+=============================
+Training Accuracy : 78.767\%
+Cross-Validation Score : 78.766\%
+
+=== Validation ===
+
+Accuracy: 63.527\%
+
+=== Testing ===
+
+Accuracy: 78.989\%
+=============================
+Run: 66
+['Humidity', 'DayOfWeek']
+=============================
+Training Accuracy : 77.907\%
+Cross-Validation Score : 74.395\%
+
+=== Validation ===
+
+Accuracy: 63.527\%
+
+=== Testing ===
+
+Accuracy: 46.842\%
+=============================
+Run: 67
+['HumidityRatio', 'Humidity', 'DayOfWeek']
+=============================
+Training Accuracy : 77.907\%
+Cross-Validation Score : 74.395\%
+
+=== Validation ===
+
+Accuracy: 63.527\%
+
+=== Testing ===
+
+Accuracy: 46.842\%
+=============================
+Run: 68
+['Temperature', 'DayOfWeek']
+=============================
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Training Accuracy : 83.581\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 78.828\%
+
+=== Validation ===
+
+Accuracy: 84.428\%
+
+=== Testing ===
+
+Accuracy: 88.966\%
+=============================
+Run: 69
+['Temperature', 'HumidityRatio', 'DayOfWeek']
+=============================
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Training Accuracy : 83.581\%
+Cross-Validation Score : 78.828\%
+
+=== Validation ===
+
+Accuracy: 84.428\%
+
+=== Testing ===
+
+Accuracy: 88.966\%
+=============================
+Run: 70
+['Temperature', 'Humidity', 'DayOfWeek']
+=============================
+Training Accuracy : 83.409\%
+Cross-Validation Score : 81.935\%
+
+=== Validation ===
+
+Accuracy: 85.779\%
+
+=== Testing ===
+
+Accuracy: 82.465\%
+=============================
+Run: 71
+['Temperature', 'HumidityRatio', 'Humidity', 'DayOfWeek']
+=============================
+Training Accuracy : 83.409\%
+Cross-Validation Score : 81.935\%
+
+=== Validation ===
+
+Accuracy: 85.779\%
+
+=== Testing ===
+
+Accuracy: 82.465\%
+=============================
+Run: 72
+['Light', 'DayOfWeek']
+=============================
+Training Accuracy : 98.711\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:422: LineSearchWarning: Rounding errors prevent the line search from converging
+  warn(msg, LineSearchWarning)
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 98.195\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.364\%
+=============================
+Run: 73
+['Light', 'HumidityRatio', 'DayOfWeek']
+=============================
+Training Accuracy : 98.711\%
+Cross-Validation Score : 98.195\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.364\%
+=============================
+Run: 74
+['Light', 'Humidity', 'DayOfWeek']
+=============================
+Training Accuracy : 98.797\%
+Cross-Validation Score : 98.011\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 98.739\%
+=============================
+Run: 75
+['Light', 'HumidityRatio', 'Humidity', 'DayOfWeek']
+=============================
+Training Accuracy : 98.797\%
+Cross-Validation Score : 98.011\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 98.739\%
+=============================
+Run: 76
+['Light', 'Temperature', 'DayOfWeek']
+=============================
+Training Accuracy : 98.723\%
+Cross-Validation Score : 98.183\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.364\%
+=============================
+Run: 77
+['Light', 'Temperature', 'HumidityRatio', 'DayOfWeek']
+=============================
+Training Accuracy : 98.723\%
+Cross-Validation Score : 98.183\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.364\%
+=============================
+Run: 78
+['Light', 'Temperature', 'Humidity', 'DayOfWeek']
+=============================
+Training Accuracy : 98.784\%
+Cross-Validation Score : 98.404\%
+
+=== Validation ===
+
+Accuracy: 96.585\%
+
+=== Testing ===
+
+Accuracy: 98.205\%
+=============================
+Run: 79
+['Light', 'Humidity', 'Temperature', 'DayOfWeek', 'HumidityRatio']
+=============================
+Training Accuracy : 98.784\%
+Cross-Validation Score : 98.404\%
+
+=== Validation ===
+
+Accuracy: 96.585\%
+
+=== Testing ===
+
+Accuracy: 98.205\%
+=============================
+Run: 80
+['CO2', 'DayOfWeek']
+=============================
+Training Accuracy : 92.312\%
+Cross-Validation Score : 90.224\%
+
+=== Validation ===
+
+Accuracy: 84.203\%
+
+=== Testing ===
+
+Accuracy: 72.149\%
+=============================
+Run: 81
+['CO2', 'HumidityRatio', 'DayOfWeek']
+=============================
+Training Accuracy : 92.312\%
+Cross-Validation Score : 90.224\%
+
+=== Validation ===
+
+Accuracy: 84.203\%
+
+=== Testing ===
+
+Accuracy: 72.149\%
+=============================
+Run: 82
+['CO2', 'Humidity', 'DayOfWeek']
+=============================
+Training Accuracy : 92.644\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:422: LineSearchWarning: Rounding errors prevent the line search from converging
+  warn(msg, LineSearchWarning)
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 92.189\%
+
+=== Validation ===
+
+Accuracy: 88.105\%
+
+=== Testing ===
+
+Accuracy: 74.733\%
+=============================
+Run: 83
+['CO2', 'Humidity', 'HumidityRatio', 'DayOfWeek']
+=============================
+Training Accuracy : 92.644\%
+Cross-Validation Score : 92.189\%
+
+=== Validation ===
+
+Accuracy: 88.105\%
+
+=== Testing ===
+
+Accuracy: 74.733\%
+=============================
+Run: 84
+['Temperature', 'CO2', 'DayOfWeek']
+=============================
+Training Accuracy : 92.312\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 89.438\%
+
+=== Validation ===
+
+Accuracy: 86.116\%
+
+=== Testing ===
+
+Accuracy: 72.621\%
+=============================
+Run: 85
+['Temperature', 'CO2', 'HumidityRatio', 'DayOfWeek']
+=============================
+Training Accuracy : 92.312\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:422: LineSearchWarning: Rounding errors prevent the line search from converging
+  warn(msg, LineSearchWarning)
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 89.438\%
+
+=== Validation ===
+
+Accuracy: 86.116\%
+
+=== Testing ===
+
+Accuracy: 72.611\%
+=============================
+Run: 86
+['Temperature', 'CO2', 'Humidity', 'DayOfWeek']
+=============================
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:422: LineSearchWarning: Rounding errors prevent the line search from converging
+  warn(msg, LineSearchWarning)
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Training Accuracy : 92.521\%
+Cross-Validation Score : 90.556\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:422: LineSearchWarning: Rounding errors prevent the line search from converging
+  warn(msg, LineSearchWarning)
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+=== Validation ===
+
+Accuracy: 87.917\%
+
+=== Testing ===
+
+Accuracy: 75.513\%
+=============================
+Run: 87
+['Humidity', 'Temperature', 'DayOfWeek', 'CO2', 'HumidityRatio']
+=============================
+Training Accuracy : 92.521\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:422: LineSearchWarning: Rounding errors prevent the line search from converging
+  warn(msg, LineSearchWarning)
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 90.556\%
+
+=== Validation ===
+
+Accuracy: 87.917\%
+
+=== Testing ===
+
+Accuracy: 75.513\%
+=============================
+Run: 88
+['Light', 'CO2', 'DayOfWeek']
+=============================
+Training Accuracy : 98.797\%
+Cross-Validation Score : 98.219\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.364\%
+=============================
+Run: 89
+['Light', 'CO2', 'HumidityRatio', 'DayOfWeek']
+=============================
+Training Accuracy : 98.797\%
+Cross-Validation Score : 98.219\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.364\%
+=============================
+Run: 90
+['Light', 'CO2', 'Humidity', 'DayOfWeek']
+=============================
+Training Accuracy : 98.797\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:203: ConvergenceWarning: newton-cg failed to converge. Increase the number of iterations.
+  "number of iterations.", ConvergenceWarning)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 97.200\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.323\%
+=============================
+Run: 91
+['Light', 'Humidity', 'DayOfWeek', 'CO2', 'HumidityRatio']
+=============================
+Training Accuracy : 98.797\%
+Cross-Validation Score : 97.200\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.323\%
+=============================
+Run: 92
+['Light', 'Temperature', 'CO2', 'DayOfWeek']
+=============================
+Training Accuracy : 98.612\%
+Cross-Validation Score : 98.330\%
+
+=== Validation ===
+
+Accuracy: 97.186\%
+
+=== Testing ===
+
+Accuracy: 98.329\%
+=============================
+Run: 93
+['Light', 'Temperature', 'DayOfWeek', 'CO2', 'HumidityRatio']
+=============================
+Training Accuracy : 98.612\%
+Cross-Validation Score : 98.330\%
+
+=== Validation ===
+
+Accuracy: 97.186\%
+
+=== Testing ===
+
+Accuracy: 98.329\%
+=============================
+Run: 94
+['Light', 'Humidity', 'Temperature', 'CO2', 'DayOfWeek']
+=============================
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Training Accuracy : 98.612\%
+Cross-Validation Score : 97.581\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+=== Validation ===
+
+Accuracy: 97.261\%
+
+=== Testing ===
+
+Accuracy: 98.308\%
+=============================
+Run: 95
+['Light', 'Humidity', 'Temperature', 'HumidityRatio', 'CO2', 'DayOfWeek']
+=============================
+Training Accuracy : 98.612\%
+Cross-Validation Score : 97.581\%
+
+=== Validation ===
+
+Accuracy: 97.261\%
+
+=== Testing ===
+
+Accuracy: 98.308\%
+=============================
+Run: 96
+['TimeOfDay', 'DayOfWeek']
+=============================
+Training Accuracy : 78.767\%
+Cross-Validation Score : 78.766\%
+
+=== Validation ===
+
+Accuracy: 63.527\%
+
+=== Testing ===
+
+Accuracy: 78.989\%
+=============================
+Run: 97
+['TimeOfDay', 'HumidityRatio', 'DayOfWeek']
+=============================
+Training Accuracy : 78.767\%
+Cross-Validation Score : 78.766\%
+
+=== Validation ===
+
+Accuracy: 63.527\%
+
+=== Testing ===
+
+Accuracy: 78.989\%
+=============================
+Run: 98
+['TimeOfDay', 'Humidity', 'DayOfWeek']
+=============================
+Training Accuracy : 77.858\%
+Cross-Validation Score : 73.425\%
+
+=== Validation ===
+
+Accuracy: 63.527\%
+
+=== Testing ===
+
+Accuracy: 46.862\%
+=============================
+Run: 99
+['TimeOfDay', 'HumidityRatio', 'Humidity', 'DayOfWeek']
+=============================
+Training Accuracy : 77.858\%
+Cross-Validation Score : 73.425\%
+
+=== Validation ===
+
+Accuracy: 63.527\%
+
+=== Testing ===
+
+Accuracy: 46.862\%
+=============================
+Run: 100
+['TimeOfDay', 'Temperature', 'DayOfWeek']
+=============================
+Training Accuracy : 83.642\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 79.245\%
+
+=== Validation ===
+
+Accuracy: 86.417\%
+
+=== Testing ===
+
+Accuracy: 90.258\%
+=============================
+Run: 101
+['TimeOfDay', 'Temperature', 'HumidityRatio', 'DayOfWeek']
+=============================
+Training Accuracy : 83.642\%
+Cross-Validation Score : 79.245\%
+
+=== Validation ===
+
+Accuracy: 86.417\%
+
+=== Testing ===
+
+Accuracy: 90.258\%
+=============================
+Run: 102
+['TimeOfDay', 'Temperature', 'Humidity', 'DayOfWeek']
+=============================
+Training Accuracy : 83.814\%
+Cross-Validation Score : 82.021\%
+
+=== Validation ===
+
+Accuracy: 87.242\%
+
+=== Testing ===
+
+Accuracy: 84.096\%
+=============================
+Run: 103
+['Humidity', 'Temperature', 'DayOfWeek', 'TimeOfDay', 'HumidityRatio']
+=============================
+Training Accuracy : 83.814\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 82.021\%
+
+=== Validation ===
+
+Accuracy: 87.242\%
+
+=== Testing ===
+
+Accuracy: 84.096\%
+=============================
+Run: 104
+['TimeOfDay', 'Light', 'DayOfWeek']
+=============================
+Training Accuracy : 98.711\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 98.195\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.385\%
+=============================
+Run: 105
+['TimeOfDay', 'HumidityRatio', 'Light', 'DayOfWeek']
+=============================
+Training Accuracy : 98.711\%
+Cross-Validation Score : 98.195\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.385\%
+=============================
+Run: 106
+['TimeOfDay', 'Humidity', 'Light', 'DayOfWeek']
+=============================
+Training Accuracy : 98.797\%
+Cross-Validation Score : 98.011\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 98.769\%
+=============================
+Run: 107
+['Light', 'Humidity', 'DayOfWeek', 'TimeOfDay', 'HumidityRatio']
+=============================
+Training Accuracy : 98.797\%
+Cross-Validation Score : 98.011\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 98.769\%
+=============================
+Run: 108
+['TimeOfDay', 'Temperature', 'Light', 'DayOfWeek']
+=============================
+Training Accuracy : 98.711\%
+Cross-Validation Score : 98.219\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.354\%
+=============================
+Run: 109
+['Light', 'Temperature', 'DayOfWeek', 'TimeOfDay', 'HumidityRatio']
+=============================
+Training Accuracy : 98.711\%
+Cross-Validation Score : 98.219\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 99.354\%
+=============================
+Run: 110
+['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'DayOfWeek']
+=============================
+Training Accuracy : 98.772\%
+Cross-Validation Score : 98.428\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 98.708\%
+=============================
+Run: 111
+['Light', 'Humidity', 'Temperature', 'HumidityRatio', 'TimeOfDay', 'DayOfWeek']
+=============================
+Training Accuracy : 98.772\%
+Cross-Validation Score : 98.428\%
+
+=== Validation ===
+
+Accuracy: 97.861\%
+
+=== Testing ===
+
+Accuracy: 98.708\%
+=============================
+Run: 112
+['TimeOfDay', 'CO2', 'DayOfWeek']
+=============================
+Training Accuracy : 92.804\%
+Cross-Validation Score : 91.428\%
+
+=== Validation ===
+
+Accuracy: 84.953\%
+
+=== Testing ===
+
+Accuracy: 75.318\%
+=============================
+Run: 113
+['TimeOfDay', 'CO2', 'HumidityRatio', 'DayOfWeek']
+=============================
+Training Accuracy : 92.804\%
+Cross-Validation Score : 91.428\%
+
+=== Validation ===
+
+Accuracy: 84.953\%
+
+=== Testing ===
+
+Accuracy: 75.318\%
+=============================
+Run: 114
+['TimeOfDay', 'CO2', 'Humidity', 'DayOfWeek']
+=============================
+Training Accuracy : 93.332\%
+Cross-Validation Score : 92.484\%
+
+=== Validation ===
+
+Accuracy: 89.193\%
+
+=== Testing ===
+
+Accuracy: 74.128\%
+=============================
+Run: 115
+['Humidity', 'DayOfWeek', 'TimeOfDay', 'CO2', 'HumidityRatio']
+=============================
+Training Accuracy : 93.332\%
+Cross-Validation Score : 92.484\%
+
+=== Validation ===
+
+Accuracy: 89.193\%
+
+=== Testing ===
+
+Accuracy: 74.128\%
+=============================
+Run: 116
+['TimeOfDay', 'Temperature', 'CO2', 'DayOfWeek']
+=============================
+Training Accuracy : 92.890\%
+Cross-Validation Score : 88.775\%
+
+=== Validation ===
+
+Accuracy: 87.730\%
+
+=== Testing ===
+
+Accuracy: 74.528\%
+=============================
+Run: 117
+['Temperature', 'DayOfWeek', 'TimeOfDay', 'CO2', 'HumidityRatio']
+=============================
+Training Accuracy : 92.890\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:422: LineSearchWarning: Rounding errors prevent the line search from converging
+  warn(msg, LineSearchWarning)
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 88.775\%
+
+=== Validation ===
+
+Accuracy: 87.730\%
+
+=== Testing ===
+
+Accuracy: 74.528\%
+=============================
+Run: 118
+['Humidity', 'Temperature', 'TimeOfDay', 'CO2', 'DayOfWeek']
+=============================
+Training Accuracy : 93.381\%
+Cross-Validation Score : 90.028\%
+
+=== Validation ===
+
+Accuracy: 90.056\%
+
+=== Testing ===
+
+Accuracy: 74.262\%
+=============================
+Run: 119
+['Humidity', 'Temperature', 'HumidityRatio', 'TimeOfDay', 'CO2', 'DayOfWeek']
+=============================
+Training Accuracy : 93.381\%
+Cross-Validation Score : 90.028\%
+
+=== Validation ===
+
+Accuracy: 90.056\%
+
+=== Testing ===
+
+Accuracy: 74.262\%
+=============================
+Run: 120
+['TimeOfDay', 'CO2', 'Light', 'DayOfWeek']
+=============================
+Training Accuracy : 98.833\%
+Cross-Validation Score : 98.330\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 99.159\%
+=============================
+Run: 121
+['Light', 'DayOfWeek', 'TimeOfDay', 'CO2', 'HumidityRatio']
+=============================
+Training Accuracy : 98.833\%
+Cross-Validation Score : 98.330\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 99.159\%
+=============================
+Run: 122
+['Light', 'Humidity', 'TimeOfDay', 'CO2', 'DayOfWeek']
+=============================
+Training Accuracy : 98.833\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 97.507\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 98.185\%
+=============================
+Run: 123
+['Light', 'Humidity', 'HumidityRatio', 'TimeOfDay', 'CO2', 'DayOfWeek']
+=============================
+Training Accuracy : 98.833\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 97.507\%
+
+=== Validation ===
+
+Accuracy: 97.824\%
+
+=== Testing ===
+
+Accuracy: 98.185\%
+=============================
+Run: 124
+['Light', 'Temperature', 'TimeOfDay', 'CO2', 'DayOfWeek']
+=============================
+Training Accuracy : 98.600\%
+Cross-Validation Score : 98.281\%
+
+=== Validation ===
+
+Accuracy: 97.223\%
+
+=== Testing ===
+
+Accuracy: 98.934\%
+=============================
+Run: 125
+['Light', 'Temperature', 'HumidityRatio', 'TimeOfDay', 'CO2', 'DayOfWeek']
+=============================
+Training Accuracy : 98.600\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+C:\textbackslash{}Program Files (x86)\textbackslash{}Microsoft Visual Studio\textbackslash{}Shared\textbackslash{}Anaconda3\_64\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}scipy\textbackslash{}optimize\textbackslash{}linesearch.py:313: LineSearchWarning: The line search algorithm did not converge
+  warn('The line search algorithm did not converge', LineSearchWarning)
+C:\textbackslash{}Users\textbackslash{}nicholas.rekstad\textbackslash{}AppData\textbackslash{}Roaming\textbackslash{}Python\textbackslash{}Python36\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}utils\textbackslash{}optimize.py:195: UserWarning: Line Search failed
+  warnings.warn('Line Search failed')
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Cross-Validation Score : 98.281\%
+
+=== Validation ===
+
+Accuracy: 97.223\%
+
+=== Testing ===
+
+Accuracy: 98.934\%
+=============================
+Run: 126
+['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'CO2', 'DayOfWeek']
+=============================
+Training Accuracy : 98.600\%
+Cross-Validation Score : 97.581\%
+
+=== Validation ===
+
+Accuracy: 97.223\%
+
+=== Testing ===
+
+Accuracy: 98.944\%
+=============================
+Run: 127
+['Light', 'Humidity', 'Temperature', 'HumidityRatio', 'TimeOfDay', 'CO2', 'DayOfWeek']
+=============================
+Training Accuracy : 98.600\%
+Cross-Validation Score : 97.581\%
+
+=== Validation ===
+
+Accuracy: 97.223\%
+
+=== Testing ===
+
+Accuracy: 98.944\%
+[[0.5017945614080991, ['HumidityRatio']], [0.5017945614080991, ['Humidity']], [0.5017945614080991, ['Humidity', 'HumidityRatio']], [0.7061986803688318, ['Temperature']], [0.7061986803688318, ['Temperature', 'HumidityRatio']], [0.7275035514916265, ['Temperature', 'Humidity']], [0.7275035514916265, ['Temperature', 'Humidity', 'HumidityRatio']], [0.971185744166396, ['Light']], [0.971185744166396, ['Light', 'HumidityRatio']], [0.966901213894451, ['Light', 'Humidity']], [0.966901213894451, ['Light', 'Humidity', 'HumidityRatio']], [0.971687493362597, ['Light', 'Temperature']], [0.971687493362597, ['Light', 'Temperature', 'HumidityRatio']], [0.969981546095514, ['Light', 'Temperature', 'Humidity']], [0.969981546095514, ['Light', 'Temperature', 'Humidity', 'HumidityRatio']], [0.6863421098399789, ['CO2']], [0.6863421098399789, ['CO2', 'HumidityRatio']], [0.6682305029650915, ['CO2', 'Humidity']], [0.6682305029650915, ['CO2', 'Humidity', 'HumidityRatio']], [0.7074011084655556, ['Temperature', 'CO2']], [0.7074011084655556, ['Temperature', 'CO2', 'HumidityRatio']], [0.6803027271454011, ['Temperature', 'CO2', 'Humidity']], [0.6803027271454011, ['Temperature', 'CO2', 'Humidity', 'HumidityRatio']], [0.9715155365253406, ['Light', 'CO2']], [0.9715155365253406, ['Light', 'CO2', 'HumidityRatio']], [0.9696096206560602, ['Light', 'CO2', 'Humidity']], [0.9696096206560602, ['Light', 'CO2', 'Humidity', 'HumidityRatio']], [0.9704832952917148, ['Light', 'Temperature', 'CO2']], [0.9704832952917148, ['Light', 'Temperature', 'CO2', 'HumidityRatio']], [0.9609419032916903, ['Light', 'Temperature', 'CO2', 'Humidity']], [0.9609419032916903, ['Light', 'Humidity', 'Temperature', 'CO2', 'HumidityRatio']], [0.5017945614080991, ['TimeOfDay']], [0.5017945614080991, ['TimeOfDay', 'HumidityRatio']], [0.5017945614080991, ['TimeOfDay', 'Humidity']], [0.5017945614080991, ['TimeOfDay', 'Humidity', 'HumidityRatio']], [0.7063966866083755, ['TimeOfDay', 'Temperature']], [0.7063966866083755, ['TimeOfDay', 'Temperature', 'HumidityRatio']], [0.7443642483689303, ['TimeOfDay', 'Temperature', 'Humidity']], [0.7443642483689303, ['TimeOfDay', 'Temperature', 'Humidity', 'HumidityRatio']], [0.9713864438448764, ['TimeOfDay', 'Light']], [0.9713864438448764, ['TimeOfDay', 'Light', 'HumidityRatio']], [0.966901213894451, ['TimeOfDay', 'Humidity', 'Light']], [0.966901213894451, ['TimeOfDay', 'Humidity', 'Light', 'HumidityRatio']], [0.9717878432018371, ['TimeOfDay', 'Temperature', 'Light']], [0.9717878432018371, ['TimeOfDay', 'Temperature', 'Light', 'HumidityRatio']], [0.971185744166396, ['TimeOfDay', 'Temperature', 'Humidity', 'Light']], [0.971185744166396, ['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'HumidityRatio']], [0.6433946488294314, ['TimeOfDay', 'CO2']], [0.6433946488294314, ['TimeOfDay', 'CO2', 'HumidityRatio']], [0.6392888089920844, ['TimeOfDay', 'CO2', 'Humidity']], [0.6392888089920844, ['TimeOfDay', 'CO2', 'Humidity', 'HumidityRatio']], [0.6979261289741691, ['TimeOfDay', 'Temperature', 'CO2']], [0.6979261289741691, ['TimeOfDay', 'Temperature', 'CO2', 'HumidityRatio']], [0.6583541241167444, ['TimeOfDay', 'Temperature', 'CO2', 'Humidity']], [0.6583541241167444, ['Humidity', 'Temperature', 'TimeOfDay', 'CO2', 'HumidityRatio']], [0.9653965434713349, ['TimeOfDay', 'CO2', 'Light']], [0.9653965434713349, ['TimeOfDay', 'CO2', 'Light', 'HumidityRatio']], [0.9693086865714369, ['TimeOfDay', 'CO2', 'Humidity', 'Light']], [0.9693086865714369, ['Light', 'Humidity', 'TimeOfDay', 'CO2', 'HumidityRatio']], [0.9709850444879157, ['TimeOfDay', 'Temperature', 'CO2', 'Light']], [0.9709850444879157, ['Light', 'Temperature', 'TimeOfDay', 'CO2', 'HumidityRatio']], [0.9628340826223937, ['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'CO2']], [0.9628340826223937, ['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'CO2', 'HumidityRatio']], [0.5017945614080991, ['DayOfWeek']], [0.5017945614080991, ['HumidityRatio', 'DayOfWeek']], [0.2975720571870955, ['Humidity', 'DayOfWeek']], [0.2975720571870955, ['HumidityRatio', 'Humidity', 'DayOfWeek']], [0.7511231640365877, ['Temperature', 'DayOfWeek']], [0.7511231640365877, ['Temperature', 'HumidityRatio', 'DayOfWeek']], [0.7073744818977817, ['Temperature', 'Humidity', 'DayOfWeek']], [0.7073744818977817, ['Temperature', 'HumidityRatio', 'Humidity', 'DayOfWeek']], [0.9723899422372781, ['Light', 'DayOfWeek']], [0.9723899422372781, ['Light', 'HumidityRatio', 'DayOfWeek']], [0.9662686020436275, ['Light', 'Humidity', 'DayOfWeek']], [0.9662686020436275, ['Light', 'HumidityRatio', 'Humidity', 'DayOfWeek']], [0.9723899422372781, ['Light', 'Temperature', 'DayOfWeek']], [0.9723899422372781, ['Light', 'Temperature', 'HumidityRatio', 'DayOfWeek']], [0.9485213789791712, ['Light', 'Temperature', 'Humidity', 'DayOfWeek']], [0.9485213789791712, ['Light', 'Humidity', 'Temperature', 'DayOfWeek', 'HumidityRatio']], [0.6075160798304519, ['CO2', 'DayOfWeek']], [0.6075160798304519, ['CO2', 'HumidityRatio', 'DayOfWeek']], [0.6584390059209483, ['CO2', 'Humidity', 'DayOfWeek']], [0.6584390059209483, ['CO2', 'Humidity', 'HumidityRatio', 'DayOfWeek']], [0.625385354156438, ['Temperature', 'CO2', 'DayOfWeek']], [0.6252970478370146, ['Temperature', 'CO2', 'HumidityRatio', 'DayOfWeek']], [0.6638885254883974, ['Temperature', 'CO2', 'Humidity', 'DayOfWeek']], [0.6638885254883974, ['Humidity', 'Temperature', 'DayOfWeek', 'CO2', 'HumidityRatio']], [0.9723899422372781, ['Light', 'CO2', 'DayOfWeek']], [0.9723899422372781, ['Light', 'CO2', 'HumidityRatio', 'DayOfWeek']], [0.9719885428803174, ['Light', 'CO2', 'Humidity', 'DayOfWeek']], [0.9719885428803174, ['Light', 'Humidity', 'DayOfWeek', 'CO2', 'HumidityRatio']], [0.9556132806547981, ['Light', 'Temperature', 'CO2', 'DayOfWeek']], [0.9556132806547981, ['Light', 'Temperature', 'DayOfWeek', 'CO2', 'HumidityRatio']], [0.9561517375759357, ['Light', 'Humidity', 'Temperature', 'CO2', 'DayOfWeek']], [0.9561517375759357, ['Light', 'Humidity', 'Temperature', 'HumidityRatio', 'CO2', 'DayOfWeek']], [0.5017945614080991, ['TimeOfDay', 'DayOfWeek']], [0.5017945614080991, ['TimeOfDay', 'HumidityRatio', 'DayOfWeek']], [0.29770234267623175, ['TimeOfDay', 'Humidity', 'DayOfWeek']], [0.29770234267623175, ['TimeOfDay', 'HumidityRatio', 'Humidity', 'DayOfWeek']], [0.7799816692241511, ['TimeOfDay', 'Temperature', 'DayOfWeek']], [0.7799816692241511, ['TimeOfDay', 'Temperature', 'HumidityRatio', 'DayOfWeek']], [0.7336667938995917, ['TimeOfDay', 'Temperature', 'Humidity', 'DayOfWeek']], [0.7336667938995917, ['Humidity', 'Temperature', 'DayOfWeek', 'TimeOfDay', 'HumidityRatio']], [0.9725906419157585, ['TimeOfDay', 'Light', 'DayOfWeek']], [0.9725906419157585, ['TimeOfDay', 'HumidityRatio', 'Light', 'DayOfWeek']], [0.9661990343636635, ['TimeOfDay', 'Humidity', 'Light', 'DayOfWeek']], [0.9661990343636635, ['Light', 'Humidity', 'DayOfWeek', 'TimeOfDay', 'HumidityRatio']], [0.972289592398038, ['TimeOfDay', 'Temperature', 'Light', 'DayOfWeek']], [0.972289592398038, ['Light', 'Temperature', 'DayOfWeek', 'TimeOfDay', 'HumidityRatio']], [0.965967552525907, ['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'DayOfWeek']], [0.965967552525907, ['Light', 'Humidity', 'Temperature', 'HumidityRatio', 'TimeOfDay', 'DayOfWeek']], [0.6398487364693171, ['TimeOfDay', 'CO2', 'DayOfWeek']], [0.6398487364693171, ['TimeOfDay', 'CO2', 'HumidityRatio', 'DayOfWeek']], [0.6611751166259059, ['TimeOfDay', 'CO2', 'Humidity', 'DayOfWeek']], [0.6611751166259059, ['Humidity', 'DayOfWeek', 'TimeOfDay', 'CO2', 'HumidityRatio']], [0.6538355340012035, ['TimeOfDay', 'Temperature', 'CO2', 'DayOfWeek']], [0.6538355340012035, ['Temperature', 'DayOfWeek', 'TimeOfDay', 'CO2', 'HumidityRatio']], [0.6687731924331296, ['Humidity', 'Temperature', 'TimeOfDay', 'CO2', 'DayOfWeek']], [0.6687731924331296, ['Humidity', 'Temperature', 'HumidityRatio', 'TimeOfDay', 'CO2', 'DayOfWeek']], [0.9700108661022244, ['TimeOfDay', 'CO2', 'Light', 'DayOfWeek']], [0.9700108661022244, ['Light', 'DayOfWeek', 'TimeOfDay', 'CO2', 'HumidityRatio']], [0.960481286755822, ['Light', 'Humidity', 'TimeOfDay', 'CO2', 'DayOfWeek']], [0.960481286755822, ['Light', 'Humidity', 'HumidityRatio', 'TimeOfDay', 'CO2', 'DayOfWeek']], [0.9618642906943993, ['Light', 'Temperature', 'TimeOfDay', 'CO2', 'DayOfWeek']], [0.9618642906943993, ['Light', 'Temperature', 'HumidityRatio', 'TimeOfDay', 'CO2', 'DayOfWeek']], [0.9619639864127548, ['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'CO2', 'DayOfWeek']], [0.9619639864127548, ['Light', 'Humidity', 'Temperature', 'HumidityRatio', 'TimeOfDay', 'CO2', 'DayOfWeek']]]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{n}{results}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
+         \PY{k}{for} \PY{n}{result} \PY{o+ow}{in} \PY{n}{results}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{result}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[0.2975720571870955, ['Humidity', 'DayOfWeek']]
+[0.2975720571870955, ['HumidityRatio', 'Humidity', 'DayOfWeek']]
+[0.29770234267623175, ['TimeOfDay', 'Humidity', 'DayOfWeek']]
+[0.29770234267623175, ['TimeOfDay', 'HumidityRatio', 'Humidity', 'DayOfWeek']]
+[0.5017945614080991, ['DayOfWeek']]
+[0.5017945614080991, ['Humidity']]
+[0.5017945614080991, ['Humidity', 'HumidityRatio']]
+[0.5017945614080991, ['HumidityRatio']]
+[0.5017945614080991, ['HumidityRatio', 'DayOfWeek']]
+[0.5017945614080991, ['TimeOfDay']]
+[0.5017945614080991, ['TimeOfDay', 'DayOfWeek']]
+[0.5017945614080991, ['TimeOfDay', 'Humidity']]
+[0.5017945614080991, ['TimeOfDay', 'Humidity', 'HumidityRatio']]
+[0.5017945614080991, ['TimeOfDay', 'HumidityRatio']]
+[0.5017945614080991, ['TimeOfDay', 'HumidityRatio', 'DayOfWeek']]
+[0.6075160798304519, ['CO2', 'DayOfWeek']]
+[0.6075160798304519, ['CO2', 'HumidityRatio', 'DayOfWeek']]
+[0.6252970478370146, ['Temperature', 'CO2', 'HumidityRatio', 'DayOfWeek']]
+[0.625385354156438, ['Temperature', 'CO2', 'DayOfWeek']]
+[0.6392888089920844, ['TimeOfDay', 'CO2', 'Humidity']]
+[0.6392888089920844, ['TimeOfDay', 'CO2', 'Humidity', 'HumidityRatio']]
+[0.6398487364693171, ['TimeOfDay', 'CO2', 'DayOfWeek']]
+[0.6398487364693171, ['TimeOfDay', 'CO2', 'HumidityRatio', 'DayOfWeek']]
+[0.6433946488294314, ['TimeOfDay', 'CO2']]
+[0.6433946488294314, ['TimeOfDay', 'CO2', 'HumidityRatio']]
+[0.6538355340012035, ['Temperature', 'DayOfWeek', 'TimeOfDay', 'CO2', 'HumidityRatio']]
+[0.6538355340012035, ['TimeOfDay', 'Temperature', 'CO2', 'DayOfWeek']]
+[0.6583541241167444, ['Humidity', 'Temperature', 'TimeOfDay', 'CO2', 'HumidityRatio']]
+[0.6583541241167444, ['TimeOfDay', 'Temperature', 'CO2', 'Humidity']]
+[0.6584390059209483, ['CO2', 'Humidity', 'DayOfWeek']]
+[0.6584390059209483, ['CO2', 'Humidity', 'HumidityRatio', 'DayOfWeek']]
+[0.6611751166259059, ['Humidity', 'DayOfWeek', 'TimeOfDay', 'CO2', 'HumidityRatio']]
+[0.6611751166259059, ['TimeOfDay', 'CO2', 'Humidity', 'DayOfWeek']]
+[0.6638885254883974, ['Humidity', 'Temperature', 'DayOfWeek', 'CO2', 'HumidityRatio']]
+[0.6638885254883974, ['Temperature', 'CO2', 'Humidity', 'DayOfWeek']]
+[0.6682305029650915, ['CO2', 'Humidity']]
+[0.6682305029650915, ['CO2', 'Humidity', 'HumidityRatio']]
+[0.6687731924331296, ['Humidity', 'Temperature', 'HumidityRatio', 'TimeOfDay', 'CO2', 'DayOfWeek']]
+[0.6687731924331296, ['Humidity', 'Temperature', 'TimeOfDay', 'CO2', 'DayOfWeek']]
+[0.6803027271454011, ['Temperature', 'CO2', 'Humidity']]
+[0.6803027271454011, ['Temperature', 'CO2', 'Humidity', 'HumidityRatio']]
+[0.6863421098399789, ['CO2']]
+[0.6863421098399789, ['CO2', 'HumidityRatio']]
+[0.6979261289741691, ['TimeOfDay', 'Temperature', 'CO2']]
+[0.6979261289741691, ['TimeOfDay', 'Temperature', 'CO2', 'HumidityRatio']]
+[0.7061986803688318, ['Temperature']]
+[0.7061986803688318, ['Temperature', 'HumidityRatio']]
+[0.7063966866083755, ['TimeOfDay', 'Temperature']]
+[0.7063966866083755, ['TimeOfDay', 'Temperature', 'HumidityRatio']]
+[0.7073744818977817, ['Temperature', 'Humidity', 'DayOfWeek']]
+[0.7073744818977817, ['Temperature', 'HumidityRatio', 'Humidity', 'DayOfWeek']]
+[0.7074011084655556, ['Temperature', 'CO2']]
+[0.7074011084655556, ['Temperature', 'CO2', 'HumidityRatio']]
+[0.7275035514916265, ['Temperature', 'Humidity']]
+[0.7275035514916265, ['Temperature', 'Humidity', 'HumidityRatio']]
+[0.7336667938995917, ['Humidity', 'Temperature', 'DayOfWeek', 'TimeOfDay', 'HumidityRatio']]
+[0.7336667938995917, ['TimeOfDay', 'Temperature', 'Humidity', 'DayOfWeek']]
+[0.7443642483689303, ['TimeOfDay', 'Temperature', 'Humidity']]
+[0.7443642483689303, ['TimeOfDay', 'Temperature', 'Humidity', 'HumidityRatio']]
+[0.7511231640365877, ['Temperature', 'DayOfWeek']]
+[0.7511231640365877, ['Temperature', 'HumidityRatio', 'DayOfWeek']]
+[0.7799816692241511, ['TimeOfDay', 'Temperature', 'DayOfWeek']]
+[0.7799816692241511, ['TimeOfDay', 'Temperature', 'HumidityRatio', 'DayOfWeek']]
+[0.9485213789791712, ['Light', 'Humidity', 'Temperature', 'DayOfWeek', 'HumidityRatio']]
+[0.9485213789791712, ['Light', 'Temperature', 'Humidity', 'DayOfWeek']]
+[0.9556132806547981, ['Light', 'Temperature', 'CO2', 'DayOfWeek']]
+[0.9556132806547981, ['Light', 'Temperature', 'DayOfWeek', 'CO2', 'HumidityRatio']]
+[0.9561517375759357, ['Light', 'Humidity', 'Temperature', 'CO2', 'DayOfWeek']]
+[0.9561517375759357, ['Light', 'Humidity', 'Temperature', 'HumidityRatio', 'CO2', 'DayOfWeek']]
+[0.960481286755822, ['Light', 'Humidity', 'HumidityRatio', 'TimeOfDay', 'CO2', 'DayOfWeek']]
+[0.960481286755822, ['Light', 'Humidity', 'TimeOfDay', 'CO2', 'DayOfWeek']]
+[0.9609419032916903, ['Light', 'Humidity', 'Temperature', 'CO2', 'HumidityRatio']]
+[0.9609419032916903, ['Light', 'Temperature', 'CO2', 'Humidity']]
+[0.9618642906943993, ['Light', 'Temperature', 'HumidityRatio', 'TimeOfDay', 'CO2', 'DayOfWeek']]
+[0.9618642906943993, ['Light', 'Temperature', 'TimeOfDay', 'CO2', 'DayOfWeek']]
+[0.9619639864127548, ['Light', 'Humidity', 'Temperature', 'HumidityRatio', 'TimeOfDay', 'CO2', 'DayOfWeek']]
+[0.9619639864127548, ['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'CO2', 'DayOfWeek']]
+[0.9628340826223937, ['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'CO2']]
+[0.9628340826223937, ['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'CO2', 'HumidityRatio']]
+[0.9653965434713349, ['TimeOfDay', 'CO2', 'Light']]
+[0.9653965434713349, ['TimeOfDay', 'CO2', 'Light', 'HumidityRatio']]
+[0.965967552525907, ['Light', 'Humidity', 'Temperature', 'HumidityRatio', 'TimeOfDay', 'DayOfWeek']]
+[0.965967552525907, ['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'DayOfWeek']]
+[0.9661990343636635, ['Light', 'Humidity', 'DayOfWeek', 'TimeOfDay', 'HumidityRatio']]
+[0.9661990343636635, ['TimeOfDay', 'Humidity', 'Light', 'DayOfWeek']]
+[0.9662686020436275, ['Light', 'Humidity', 'DayOfWeek']]
+[0.9662686020436275, ['Light', 'HumidityRatio', 'Humidity', 'DayOfWeek']]
+[0.966901213894451, ['Light', 'Humidity']]
+[0.966901213894451, ['Light', 'Humidity', 'HumidityRatio']]
+[0.966901213894451, ['TimeOfDay', 'Humidity', 'Light']]
+[0.966901213894451, ['TimeOfDay', 'Humidity', 'Light', 'HumidityRatio']]
+[0.9693086865714369, ['Light', 'Humidity', 'TimeOfDay', 'CO2', 'HumidityRatio']]
+[0.9693086865714369, ['TimeOfDay', 'CO2', 'Humidity', 'Light']]
+[0.9696096206560602, ['Light', 'CO2', 'Humidity']]
+[0.9696096206560602, ['Light', 'CO2', 'Humidity', 'HumidityRatio']]
+[0.969981546095514, ['Light', 'Temperature', 'Humidity']]
+[0.969981546095514, ['Light', 'Temperature', 'Humidity', 'HumidityRatio']]
+[0.9700108661022244, ['Light', 'DayOfWeek', 'TimeOfDay', 'CO2', 'HumidityRatio']]
+[0.9700108661022244, ['TimeOfDay', 'CO2', 'Light', 'DayOfWeek']]
+[0.9704832952917148, ['Light', 'Temperature', 'CO2']]
+[0.9704832952917148, ['Light', 'Temperature', 'CO2', 'HumidityRatio']]
+[0.9709850444879157, ['Light', 'Temperature', 'TimeOfDay', 'CO2', 'HumidityRatio']]
+[0.9709850444879157, ['TimeOfDay', 'Temperature', 'CO2', 'Light']]
+[0.971185744166396, ['Light']]
+[0.971185744166396, ['Light', 'Humidity', 'Temperature', 'TimeOfDay', 'HumidityRatio']]
+[0.971185744166396, ['Light', 'HumidityRatio']]
+[0.971185744166396, ['TimeOfDay', 'Temperature', 'Humidity', 'Light']]
+[0.9713864438448764, ['TimeOfDay', 'Light']]
+[0.9713864438448764, ['TimeOfDay', 'Light', 'HumidityRatio']]
+[0.9715155365253406, ['Light', 'CO2']]
+[0.9715155365253406, ['Light', 'CO2', 'HumidityRatio']]
+[0.971687493362597, ['Light', 'Temperature']]
+[0.971687493362597, ['Light', 'Temperature', 'HumidityRatio']]
+[0.9717878432018371, ['TimeOfDay', 'Temperature', 'Light']]
+[0.9717878432018371, ['TimeOfDay', 'Temperature', 'Light', 'HumidityRatio']]
+[0.9719885428803174, ['Light', 'CO2', 'Humidity', 'DayOfWeek']]
+[0.9719885428803174, ['Light', 'Humidity', 'DayOfWeek', 'CO2', 'HumidityRatio']]
+[0.972289592398038, ['Light', 'Temperature', 'DayOfWeek', 'TimeOfDay', 'HumidityRatio']]
+[0.972289592398038, ['TimeOfDay', 'Temperature', 'Light', 'DayOfWeek']]
+[0.9723899422372781, ['Light', 'CO2', 'DayOfWeek']]
+[0.9723899422372781, ['Light', 'CO2', 'HumidityRatio', 'DayOfWeek']]
+[0.9723899422372781, ['Light', 'DayOfWeek']]
+[0.9723899422372781, ['Light', 'HumidityRatio', 'DayOfWeek']]
+[0.9723899422372781, ['Light', 'Temperature', 'DayOfWeek']]
+[0.9723899422372781, ['Light', 'Temperature', 'HumidityRatio', 'DayOfWeek']]
+[0.9725906419157585, ['TimeOfDay', 'HumidityRatio', 'Light', 'DayOfWeek']]
+[0.9725906419157585, ['TimeOfDay', 'Light', 'DayOfWeek']]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}101}]:} \PY{c+c1}{\PYZsh{} Hyperparameter tuning (done by editing trainValidateTestClassificationModel() scoring to reflect only validation model)}
+          
+          \PY{n}{hyperParametersArray} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          
+          \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{:}
+              \PY{c+c1}{\PYZsh{} Testing all model types with all variables}
+              \PY{n}{modelKNearestNeighbors} \PY{o}{=} \PY{n}{KNeighborsClassifier}\PY{p}{(}\PY{n}{n\PYZus{}neighbors}\PY{o}{=}\PY{n}{n}\PY{p}{)}
+          
+              \PY{c+c1}{\PYZsh{} Desired inputs and outputs}
+              \PY{n}{predictor\PYZus{}var} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DayOfWeek}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TimeOfDay}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+              \PY{n}{outcome\PYZus{}var} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Occupancy}\PY{l+s+s1}{\PYZsq{}}
+          
+              \PY{c+c1}{\PYZsh{} Execute models}
+              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{============ Model with }\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{ Neighbors ============}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{n}\PY{p}{)}
+              \PY{n}{hyperParametersArray}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelKNearestNeighbors}\PY{p}{,} \PY{n}{trainingDataAddedFeatures}\PY{p}{,} \PY{n}{validationDataFrame}\PY{p}{,} \PY{n}{testDataFrame}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}\PY{p}{,}\PY{n}{n}\PY{p}{]}\PY{p}{)}
+              
+          
+          \PY{n}{hyperParametersArray}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
+          
+          \PY{k}{for} \PY{n}{entry} \PY{o+ow}{in} \PY{n}{hyperParametersArray}\PY{p}{:}
+              \PY{n+nb}{print}\PY{p}{(}\PY{n}{entry}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+============ Model with 1 Neighbors ============
+
+Training Accuracy : 98.686\%
+Cross-Validation Score : 77.932\%
+
+=== Validation ===
+
+Accuracy: 94.371\%
+
+=== Testing ===
+
+Accuracy: 89.182\%
+============ Model with 2 Neighbors ============
+
+Training Accuracy : 98.637\%
+Cross-Validation Score : 78.091\%
+
+=== Validation ===
+
+Accuracy: 94.371\%
+
+=== Testing ===
+
+Accuracy: 89.346\%
+============ Model with 3 Neighbors ============
+
+Training Accuracy : 98.661\%
+Cross-Validation Score : 78.067\%
+
+=== Validation ===
+
+Accuracy: 94.371\%
+
+=== Testing ===
+
+Accuracy: 89.325\%
+============ Model with 4 Neighbors ============
+
+Training Accuracy : 98.649\%
+Cross-Validation Score : 77.858\%
+
+=== Validation ===
+
+Accuracy: 94.371\%
+
+=== Testing ===
+
+Accuracy: 89.346\%
+============ Model with 5 Neighbors ============
+
+Training Accuracy : 98.711\%
+Cross-Validation Score : 77.833\%
+
+=== Validation ===
+
+Accuracy: 94.371\%
+
+=== Testing ===
+
+Accuracy: 87.490\%
+============ Model with 6 Neighbors ============
+
+Training Accuracy : 98.637\%
+Cross-Validation Score : 77.833\%
+
+=== Validation ===
+
+Accuracy: 94.371\%
+
+=== Testing ===
+
+Accuracy: 88.249\%
+============ Model with 7 Neighbors ============
+
+Training Accuracy : 98.661\%
+Cross-Validation Score : 77.870\%
+
+=== Validation ===
+
+Accuracy: 94.371\%
+
+=== Testing ===
+
+Accuracy: 88.413\%
+============ Model with 8 Neighbors ============
+
+Training Accuracy : 98.698\%
+Cross-Validation Score : 77.870\%
+
+=== Validation ===
+
+Accuracy: 94.371\%
+
+=== Testing ===
+
+Accuracy: 88.454\%
+============ Model with 9 Neighbors ============
+
+Training Accuracy : 98.674\%
+Cross-Validation Score : 77.956\%
+
+=== Validation ===
+
+Accuracy: 94.371\%
+
+=== Testing ===
+
+Accuracy: 89.018\%
+============ Model with 10 Neighbors ============
+
+Training Accuracy : 98.514\%
+Cross-Validation Score : 78.656\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 89.100\%
+============ Model with 11 Neighbors ============
+
+Training Accuracy : 98.526\%
+Cross-Validation Score : 78.607\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.782\%
+============ Model with 12 Neighbors ============
+
+Training Accuracy : 98.502\%
+Cross-Validation Score : 78.607\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 87.572\%
+============ Model with 13 Neighbors ============
+
+Training Accuracy : 98.465\%
+Cross-Validation Score : 78.631\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 87.572\%
+============ Model with 14 Neighbors ============
+
+Training Accuracy : 98.354\%
+Cross-Validation Score : 78.840\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 87.726\%
+============ Model with 15 Neighbors ============
+
+Training Accuracy : 98.416\%
+Cross-Validation Score : 78.840\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 87.726\%
+============ Model with 16 Neighbors ============
+
+Training Accuracy : 98.367\%
+Cross-Validation Score : 78.766\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 87.726\%
+============ Model with 17 Neighbors ============
+
+Training Accuracy : 98.367\%
+Cross-Validation Score : 78.791\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 87.808\%
+============ Model with 18 Neighbors ============
+
+Training Accuracy : 98.318\%
+Cross-Validation Score : 78.656\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 87.808\%
+============ Model with 19 Neighbors ============
+
+Training Accuracy : 98.293\%
+Cross-Validation Score : 78.656\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 87.828\%
+============ Model with 20 Neighbors ============
+
+Training Accuracy : 98.318\%
+Cross-Validation Score : 78.631\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 87.849\%
+============ Model with 21 Neighbors ============
+
+Training Accuracy : 98.281\%
+Cross-Validation Score : 78.545\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 87.849\%
+============ Model with 22 Neighbors ============
+
+Training Accuracy : 98.219\%
+Cross-Validation Score : 79.306\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 87.931\%
+============ Model with 23 Neighbors ============
+
+Training Accuracy : 98.219\%
+Cross-Validation Score : 79.331\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.228\%
+============ Model with 24 Neighbors ============
+
+Training Accuracy : 98.219\%
+Cross-Validation Score : 79.319\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.249\%
+============ Model with 25 Neighbors ============
+
+Training Accuracy : 98.207\%
+Cross-Validation Score : 79.527\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.249\%
+============ Model with 26 Neighbors ============
+
+Training Accuracy : 98.195\%
+Cross-Validation Score : 79.503\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.238\%
+============ Model with 27 Neighbors ============
+
+Training Accuracy : 98.195\%
+Cross-Validation Score : 79.417\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.269\%
+============ Model with 28 Neighbors ============
+
+Training Accuracy : 98.097\%
+Cross-Validation Score : 79.515\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.341\%
+============ Model with 29 Neighbors ============
+
+Training Accuracy : 98.182\%
+Cross-Validation Score : 79.736\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.351\%
+============ Model with 30 Neighbors ============
+
+Training Accuracy : 98.047\%
+Cross-Validation Score : 79.822\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.351\%
+============ Model with 31 Neighbors ============
+
+Training Accuracy : 97.925\%
+Cross-Validation Score : 80.055\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.577\%
+============ Model with 32 Neighbors ============
+
+Training Accuracy : 97.863\%
+Cross-Validation Score : 80.055\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.628\%
+============ Model with 33 Neighbors ============
+
+Training Accuracy : 97.900\%
+Cross-Validation Score : 80.092\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.689\%
+============ Model with 34 Neighbors ============
+
+Training Accuracy : 97.900\%
+Cross-Validation Score : 80.092\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.843\%
+============ Model with 35 Neighbors ============
+
+Training Accuracy : 97.900\%
+Cross-Validation Score : 80.092\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.833\%
+============ Model with 36 Neighbors ============
+
+Training Accuracy : 97.900\%
+Cross-Validation Score : 80.092\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.833\%
+============ Model with 37 Neighbors ============
+
+Training Accuracy : 97.900\%
+Cross-Validation Score : 79.761\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.823\%
+============ Model with 38 Neighbors ============
+
+Training Accuracy : 97.900\%
+Cross-Validation Score : 79.736\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.823\%
+============ Model with 39 Neighbors ============
+
+Training Accuracy : 97.900\%
+Cross-Validation Score : 79.761\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.874\%
+============ Model with 40 Neighbors ============
+
+Training Accuracy : 97.630\%
+Cross-Validation Score : 79.736\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.207\%
+============ Model with 41 Neighbors ============
+
+Training Accuracy : 97.605\%
+Cross-Validation Score : 79.626\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.207\%
+============ Model with 42 Neighbors ============
+
+Training Accuracy : 97.605\%
+Cross-Validation Score : 79.773\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.207\%
+============ Model with 43 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.626\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.217\%
+============ Model with 44 Neighbors ============
+
+Training Accuracy : 97.654\%
+Cross-Validation Score : 79.773\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.217\%
+============ Model with 45 Neighbors ============
+
+Training Accuracy : 97.654\%
+Cross-Validation Score : 79.601\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.166\%
+============ Model with 46 Neighbors ============
+
+Training Accuracy : 97.654\%
+Cross-Validation Score : 79.773\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.238\%
+============ Model with 47 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.859\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.228\%
+============ Model with 48 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.859\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.238\%
+============ Model with 49 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.834\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.238\%
+============ Model with 50 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.834\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.238\%
+============ Model with 51 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.834\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.238\%
+============ Model with 52 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.834\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.494\%
+============ Model with 53 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 80.105\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.474\%
+============ Model with 54 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 80.166\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.474\%
+============ Model with 55 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.822\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.474\%
+============ Model with 56 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.822\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.453\%
+============ Model with 57 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.798\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.505\%
+============ Model with 58 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.798\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.505\%
+============ Model with 59 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.798\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.505\%
+============ Model with 60 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.442\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.556\%
+============ Model with 61 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.380\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.556\%
+============ Model with 62 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.282\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.556\%
+============ Model with 63 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.356\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.556\%
+============ Model with 64 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.270\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.556\%
+============ Model with 65 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.257\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.556\%
+============ Model with 66 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.749\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.556\%
+============ Model with 67 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.884\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.269\%
+============ Model with 68 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.896\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.269\%
+============ Model with 69 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.896\%
+
+=== Validation ===
+
+Accuracy: 93.096\%
+
+=== Testing ===
+
+Accuracy: 90.269\%
+============ Model with 70 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.871\%
+
+=== Validation ===
+
+Accuracy: 92.983\%
+
+=== Testing ===
+
+Accuracy: 90.176\%
+============ Model with 71 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 80.031\%
+
+=== Validation ===
+
+Accuracy: 92.983\%
+
+=== Testing ===
+
+Accuracy: 90.115\%
+============ Model with 72 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 80.031\%
+
+=== Validation ===
+
+Accuracy: 92.983\%
+
+=== Testing ===
+
+Accuracy: 90.115\%
+============ Model with 73 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 80.031\%
+
+=== Validation ===
+
+Accuracy: 92.983\%
+
+=== Testing ===
+
+Accuracy: 90.156\%
+============ Model with 74 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 80.031\%
+
+=== Validation ===
+
+Accuracy: 92.983\%
+
+=== Testing ===
+
+Accuracy: 90.156\%
+============ Model with 75 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 80.031\%
+
+=== Validation ===
+
+Accuracy: 92.983\%
+
+=== Testing ===
+
+Accuracy: 90.135\%
+============ Model with 76 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 80.031\%
+
+=== Validation ===
+
+Accuracy: 92.983\%
+
+=== Testing ===
+
+Accuracy: 90.135\%
+============ Model with 77 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 80.055\%
+
+=== Validation ===
+
+Accuracy: 92.983\%
+
+=== Testing ===
+
+Accuracy: 90.156\%
+============ Model with 78 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.380\%
+
+=== Validation ===
+
+Accuracy: 92.871\%
+
+=== Testing ===
+
+Accuracy: 90.135\%
+============ Model with 79 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.405\%
+
+=== Validation ===
+
+Accuracy: 94.972\%
+
+=== Testing ===
+
+Accuracy: 89.325\%
+============ Model with 80 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.405\%
+
+=== Validation ===
+
+Accuracy: 94.934\%
+
+=== Testing ===
+
+Accuracy: 89.325\%
+============ Model with 81 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.417\%
+
+=== Validation ===
+
+Accuracy: 95.084\%
+
+=== Testing ===
+
+Accuracy: 89.325\%
+============ Model with 82 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.638\%
+
+=== Validation ===
+
+Accuracy: 95.084\%
+
+=== Testing ===
+
+Accuracy: 89.305\%
+============ Model with 83 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.417\%
+
+=== Validation ===
+
+Accuracy: 94.934\%
+
+=== Testing ===
+
+Accuracy: 89.305\%
+============ Model with 84 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.417\%
+
+=== Validation ===
+
+Accuracy: 94.934\%
+
+=== Testing ===
+
+Accuracy: 89.305\%
+============ Model with 85 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 78.693\%
+
+=== Validation ===
+
+Accuracy: 94.934\%
+
+=== Testing ===
+
+Accuracy: 89.305\%
+============ Model with 86 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 78.901\%
+
+=== Validation ===
+
+Accuracy: 94.934\%
+
+=== Testing ===
+
+Accuracy: 89.346\%
+============ Model with 87 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 78.680\%
+
+=== Validation ===
+
+Accuracy: 94.934\%
+
+=== Testing ===
+
+Accuracy: 89.346\%
+============ Model with 88 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.147\%
+
+=== Validation ===
+
+Accuracy: 94.934\%
+
+=== Testing ===
+
+Accuracy: 89.346\%
+============ Model with 89 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.049\%
+
+=== Validation ===
+
+Accuracy: 94.972\%
+
+=== Testing ===
+
+Accuracy: 89.346\%
+============ Model with 90 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 79.061\%
+
+=== Validation ===
+
+Accuracy: 94.972\%
+
+=== Testing ===
+
+Accuracy: 89.346\%
+============ Model with 91 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 78.987\%
+
+=== Validation ===
+
+Accuracy: 94.972\%
+
+=== Testing ===
+
+Accuracy: 89.346\%
+============ Model with 92 Neighbors ============
+
+Training Accuracy : 97.630\%
+Cross-Validation Score : 79.012\%
+
+=== Validation ===
+
+Accuracy: 94.972\%
+
+=== Testing ===
+
+Accuracy: 89.346\%
+============ Model with 93 Neighbors ============
+
+Training Accuracy : 97.642\%
+Cross-Validation Score : 78.951\%
+
+=== Validation ===
+
+Accuracy: 94.972\%
+
+=== Testing ===
+
+Accuracy: 89.346\%
+============ Model with 94 Neighbors ============
+
+Training Accuracy : 97.581\%
+Cross-Validation Score : 78.987\%
+
+=== Validation ===
+
+Accuracy: 94.972\%
+
+=== Testing ===
+
+Accuracy: 89.346\%
+============ Model with 95 Neighbors ============
+
+Training Accuracy : 97.605\%
+Cross-Validation Score : 78.275\%
+
+=== Validation ===
+
+Accuracy: 94.747\%
+
+=== Testing ===
+
+Accuracy: 89.346\%
+============ Model with 96 Neighbors ============
+
+Training Accuracy : 97.519\%
+Cross-Validation Score : 78.275\%
+
+=== Validation ===
+
+Accuracy: 94.709\%
+
+=== Testing ===
+
+Accuracy: 89.674\%
+============ Model with 97 Neighbors ============
+
+Training Accuracy : 97.519\%
+Cross-Validation Score : 78.079\%
+
+=== Validation ===
+
+Accuracy: 94.709\%
+
+=== Testing ===
+
+Accuracy: 89.674\%
+============ Model with 98 Neighbors ============
+
+Training Accuracy : 97.470\%
+Cross-Validation Score : 78.079\%
+
+=== Validation ===
+
+Accuracy: 94.709\%
+
+=== Testing ===
+
+Accuracy: 89.295\%
+============ Model with 99 Neighbors ============
+
+Training Accuracy : 97.470\%
+Cross-Validation Score : 78.079\%
+
+=== Validation ===
+
+Accuracy: 94.709\%
+
+=== Testing ===
+
+Accuracy: 89.674\%
+[0.9287054409005628, 78]
+[0.9298311444652908, 70]
+[0.9298311444652908, 71]
+[0.9298311444652908, 72]
+[0.9298311444652908, 73]
+[0.9298311444652908, 74]
+[0.9298311444652908, 75]
+[0.9298311444652908, 76]
+[0.9298311444652908, 77]
+[0.9309568480300188, 40]
+[0.9309568480300188, 41]
+[0.9309568480300188, 42]
+[0.9309568480300188, 43]
+[0.9309568480300188, 44]
+[0.9309568480300188, 45]
+[0.9309568480300188, 46]
+[0.9309568480300188, 47]
+[0.9309568480300188, 48]
+[0.9309568480300188, 49]
+[0.9309568480300188, 50]
+[0.9309568480300188, 51]
+[0.9309568480300188, 52]
+[0.9309568480300188, 53]
+[0.9309568480300188, 54]
+[0.9309568480300188, 55]
+[0.9309568480300188, 56]
+[0.9309568480300188, 57]
+[0.9309568480300188, 58]
+[0.9309568480300188, 59]
+[0.9309568480300188, 60]
+[0.9309568480300188, 61]
+[0.9309568480300188, 62]
+[0.9309568480300188, 63]
+[0.9309568480300188, 64]
+[0.9309568480300188, 65]
+[0.9309568480300188, 66]
+[0.9309568480300188, 67]
+[0.9309568480300188, 68]
+[0.9309568480300188, 69]
+[0.9437148217636022, 1]
+[0.9437148217636022, 2]
+[0.9437148217636022, 3]
+[0.9437148217636022, 4]
+[0.9437148217636022, 5]
+[0.9437148217636022, 6]
+[0.9437148217636022, 7]
+[0.9437148217636022, 8]
+[0.9437148217636022, 9]
+[0.9470919324577861, 96]
+[0.9470919324577861, 97]
+[0.9470919324577861, 98]
+[0.9470919324577861, 99]
+[0.9474671669793621, 95]
+[0.949343339587242, 80]
+[0.949343339587242, 83]
+[0.949343339587242, 84]
+[0.949343339587242, 85]
+[0.949343339587242, 86]
+[0.949343339587242, 87]
+[0.949343339587242, 88]
+[0.949718574108818, 79]
+[0.949718574108818, 89]
+[0.949718574108818, 90]
+[0.949718574108818, 91]
+[0.949718574108818, 92]
+[0.949718574108818, 93]
+[0.949718574108818, 94]
+[0.950844277673546, 81]
+[0.950844277673546, 82]
+[0.9530956848030019, 10]
+[0.9530956848030019, 11]
+[0.9530956848030019, 12]
+[0.9530956848030019, 13]
+[0.9530956848030019, 14]
+[0.9530956848030019, 15]
+[0.9530956848030019, 16]
+[0.9530956848030019, 17]
+[0.9530956848030019, 18]
+[0.9530956848030019, 19]
+[0.9530956848030019, 20]
+[0.9530956848030019, 21]
+[0.9530956848030019, 22]
+[0.9530956848030019, 23]
+[0.9530956848030019, 24]
+[0.9530956848030019, 25]
+[0.9530956848030019, 26]
+[0.9530956848030019, 27]
+[0.9530956848030019, 28]
+[0.9530956848030019, 29]
+[0.9530956848030019, 30]
+[0.9530956848030019, 31]
+[0.9530956848030019, 32]
+[0.9530956848030019, 33]
+[0.9530956848030019, 34]
+[0.9530956848030019, 35]
+[0.9530956848030019, 36]
+[0.9530956848030019, 37]
+[0.9530956848030019, 38]
+[0.9530956848030019, 39]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}108}]:} \PY{c+c1}{\PYZsh{} Testing all model types with all variables and updated hyperparameters}
+          \PY{n}{modelKNearestNeighbors} \PY{o}{=} \PY{n}{KNeighborsClassifier}\PY{p}{(}\PY{n}{n\PYZus{}neighbors}\PY{o}{=}\PY{l+m+mi}{39}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{} Desired inputs and outputs}
+          \PY{n}{predictor\PYZus{}var} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DayOfWeek}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TimeOfDay}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Temperature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n}{outcome\PYZus{}var} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Occupancy}\PY{l+s+s1}{\PYZsq{}}
+          
+          \PY{c+c1}{\PYZsh{} Execute models}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{============ Model with 39 Neighbors ============}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{trainValidateTestClassificationModel}\PY{p}{(}\PY{n}{modelKNearestNeighbors}\PY{p}{,} \PY{n}{trainingDataAddedFeatures}\PY{p}{,} \PY{n}{validationDataFrame}\PY{p}{,} \PY{n}{testDataFrame}\PY{p}{,} \PY{n}{predictor\PYZus{}var}\PY{p}{,} \PY{n}{outcome\PYZus{}var}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+============ Model with 39 Neighbors ============
+
+Training Accuracy : 97.900\%
+Cross-Validation Score : 79.761\%
+
+=== Validation ===
+
+Accuracy: 95.310\%
+
+=== Testing ===
+
+Accuracy: 88.874\%
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}108}]:} 0.8470549938666548
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}109}]:} \PY{n}{predictions} \PY{o}{=} \PY{n}{modelKNearestNeighbors}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{testDataFrame}\PY{p}{[}\PY{n}{predictor\PYZus{}var}\PY{p}{]}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{predictions}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[1 1 1 {\ldots} 1 1 1]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}110}]:} \PY{n}{workbook} \PY{o}{=} \PY{n}{openpyxl}\PY{o}{.}\PY{n}{load\PYZus{}workbook}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{C:/Users/nicholas.rekstad/MastersModuleProject/ReportOutputGraphics.xlsx}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          
+          \PY{n}{worksheet} \PY{o}{=} \PY{n}{workbook}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sheet1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          
+          \PY{n}{i}\PY{o}{=}\PY{l+m+mi}{2}
+          \PY{k}{for} \PY{n}{prediction} \PY{o+ow}{in} \PY{n}{predictions}\PY{p}{:}
+              \PY{n}{worksheet}\PY{o}{.}\PY{n}{cell}\PY{p}{(}\PY{n}{row}\PY{o}{=}\PY{n}{i}\PY{p}{,}\PY{n}{column}\PY{o}{=}\PY{l+m+mi}{8}\PY{p}{)}\PY{o}{.}\PY{n}{value} \PY{o}{=} \PY{n}{prediction}
+              \PY{n}{i}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+          \PY{n}{workbook}\PY{o}{.}\PY{n}{save}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{C:/Users/nicholas.rekstad/MastersModuleProject/ReportOutputGraphics.xlsx}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}111}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{metrics}\PY{o}{.}\PY{n}{confusion\PYZus{}matrix}\PY{p}{(}\PY{n}{testDataFrame}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Occupancy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}\PY{n}{predictions}\PY{p}{)}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{metrics}\PY{o}{.}\PY{n}{classification\PYZus{}report}\PY{p}{(}\PY{n}{testDataFrame}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Occupancy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}\PY{n}{predictions}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[[6767  936]
+ [ 149 1900]]
+              precision    recall  f1-score   support
+
+           0       0.98      0.88      0.93      7703
+           1       0.67      0.93      0.78      2049
+
+    accuracy                           0.89      9752
+   macro avg       0.82      0.90      0.85      9752
+weighted avg       0.91      0.89      0.89      9752
+
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}112}]:} \PY{n}{predictions} \PY{o}{=} \PY{n}{modelKNearestNeighbors}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{validationDataFrame}\PY{p}{[}\PY{n}{predictor\PYZus{}var}\PY{p}{]}\PY{p}{)}
+          
+          \PY{n}{workbook} \PY{o}{=} \PY{n}{openpyxl}\PY{o}{.}\PY{n}{load\PYZus{}workbook}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{C:/Users/nicholas.rekstad/MastersModuleProject/ReportOutputGraphics.xlsx}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          
+          \PY{n}{worksheet} \PY{o}{=} \PY{n}{workbook}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sheet2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          
+          \PY{n}{i}\PY{o}{=}\PY{l+m+mi}{2}
+          \PY{k}{for} \PY{n}{prediction} \PY{o+ow}{in} \PY{n}{predictions}\PY{p}{:}
+              \PY{n}{worksheet}\PY{o}{.}\PY{n}{cell}\PY{p}{(}\PY{n}{row}\PY{o}{=}\PY{n}{i}\PY{p}{,}\PY{n}{column}\PY{o}{=}\PY{l+m+mi}{8}\PY{p}{)}\PY{o}{.}\PY{n}{value} \PY{o}{=} \PY{n}{prediction}
+              \PY{n}{i}\PY{o}{+}\PY{o}{=}\PY{l+m+mi}{1}
+          \PY{n}{workbook}\PY{o}{.}\PY{n}{save}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{C:/Users/nicholas.rekstad/MastersModuleProject/ReportOutputGraphics.xlsx}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}113}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{metrics}\PY{o}{.}\PY{n}{confusion\PYZus{}matrix}\PY{p}{(}\PY{n}{validationDataFrame}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Occupancy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}\PY{n}{predictions}\PY{p}{)}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{metrics}\PY{o}{.}\PY{n}{classification\PYZus{}report}\PY{p}{(}\PY{n}{validationDataFrame}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Occupancy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}\PY{n}{predictions}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[[1625   68]
+ [  57  915]]
+              precision    recall  f1-score   support
+
+           0       0.97      0.96      0.96      1693
+           1       0.93      0.94      0.94       972
+
+    accuracy                           0.95      2665
+   macro avg       0.95      0.95      0.95      2665
+weighted avg       0.95      0.95      0.95      2665
+
+
+    \end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
